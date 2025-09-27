@@ -36,7 +36,7 @@ public class DriveBase
      *  - Zero power behavior
      */
     public void init()
-    {
+    {//front is intake lol
         leftFrontDrive = myOpMode.hardwareMap.get(DcMotor.class, "leftFront");
         leftRearDrive = myOpMode.hardwareMap.get(DcMotor.class, "leftRear");
         rightFrontDrive = myOpMode.hardwareMap.get(DcMotor.class,"rightFront");
@@ -59,7 +59,7 @@ public class DriveBase
         rightRearDrive.setDirection(DcMotor.Direction.FORWARD);
 
         // TODO: Update this based on how the hub is mounted on the robot
-        imu = myOpMode.hardwareMap.get(IMU.class,"imu");
+        imu = myOpMode.hardwareMap.get(IMU.class,"imu"); //check control hub
         IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
                 RevHubOrientationOnRobot.LogoFacingDirection.RIGHT,
                 RevHubOrientationOnRobot.UsbFacingDirection.FORWARD));
