@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.robots;
+package org.firstinspires.ftc.teamcode;
 
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
@@ -22,6 +22,9 @@ public class DriveBase
     protected DcMotor rightFrontDrive = null;
     protected DcMotor rightRearDrive = null;
 
+    protected DcMotor flyWheelThree = null;
+
+    protected DcMotor flyWheelFour = null;
     protected IMU imu = null;
 
     public DriveBase (LinearOpMode opMode, boolean isFC)
