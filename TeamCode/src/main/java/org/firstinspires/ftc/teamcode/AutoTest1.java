@@ -14,6 +14,11 @@ public class AutoTest1 extends LinearOpMode {
     protected DcMotor leftRearDrive = null;
     protected DcMotor rightFrontDrive = null;
     protected DcMotor rightRearDrive = null;
+
+    protected DcMotor flyWheelThree = null;
+
+    protected DcMotor flyWheelFour = null;
+
     public void runOpMode()
     {
 

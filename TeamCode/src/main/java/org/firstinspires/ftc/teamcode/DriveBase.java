@@ -5,7 +5,7 @@ import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.IMU;
-
+import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 /**
@@ -21,6 +21,8 @@ public class DriveBase
     protected DcMotor leftRearDrive = null;
     protected DcMotor rightFrontDrive = null;
     protected DcMotor rightRearDrive = null;
+
+    protected Servo flyWheelOneTwo;
 
     protected DcMotor flyWheelThree = null;
 
@@ -44,7 +46,9 @@ public class DriveBase
         leftRearDrive = myOpMode.hardwareMap.get(DcMotor.class, "leftRear");
         rightFrontDrive = myOpMode.hardwareMap.get(DcMotor.class,"rightFront");
         rightRearDrive = myOpMode.hardwareMap.get(DcMotor.class,"rightRear");
-
+        flyWheelOneTwo = myOpMode.hardwareMap.get(Servo.class, "flyWheelOneTwo");
+        flyWheelThree = myOpMode.hardwareMap.get(DcMotor.class,"flyWheelThree");
+        flyWheelFour = myOpMode.hardwareMap.get(DcMotor.class,"flyWheelFour");
 
         // ########################################################################################
         // !!!            IMPORTANT Drive Information. Test your motor directions.            !!!!!
@@ -60,6 +64,14 @@ public class DriveBase
         leftRearDrive.setDirection(DcMotor.Direction.REVERSE);
         rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
         rightRearDrive.setDirection(DcMotor.Direction.FORWARD);
+        flyWheelOneTwo.setDirection(Servo.Direction.FORWARD);
+        flyWheelThree.setDirection(DcMotor.Direction.FORWARD);
+        flyWheelFour.setDirection(DcMotor.Direction.FORWARD);
+
+        public void intakeFlyWheel()
+        {
+            flyWheelOneTwo.
+        }
 
         // TODO: Update this based on how the hub is mounted on the robot
         imu = myOpMode.hardwareMap.get(IMU.class,"imu"); //check control hub
