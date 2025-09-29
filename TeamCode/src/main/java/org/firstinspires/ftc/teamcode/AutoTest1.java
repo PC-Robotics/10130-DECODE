@@ -23,7 +23,7 @@ public class AutoTest1 extends LinearOpMode {
 
         while(opModeIsActive())
         {
-            ///////
+            //
         }
     }
 }
