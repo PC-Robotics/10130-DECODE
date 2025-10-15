@@ -6,11 +6,11 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 @TeleOp(name="Starting Teleop")
 public class JoulesTeleop extends LinearOpMode {
 
-    DriveBase robot;
+    RobotBase robot;
 
     public JoulesTeleop()
     {
-        robot = new DriveBase(this, true);
+        robot = new RobotBase(this, true);
     }
 
     @Override
