@@ -28,6 +28,9 @@ public class JoulesTeleop extends LinearOpMode {
             double rx = gamepad1.right_stick_x;
 
             robot.drive(y,x,rx);
+
+            robot.launch(gamepad1.left_bumper, 0);
+            if (gamepad1.left_trigger > .4) robot.launch(true, 1);
         }
     }
 }

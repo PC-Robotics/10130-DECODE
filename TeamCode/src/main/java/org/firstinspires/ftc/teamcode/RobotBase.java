@@ -36,7 +36,7 @@ public class RobotBase extends DriveBase{
     }
     public void init()
     {
-        feeder = myOpMode.hardwareMap.get(DcMotor.class, "intake3");
+        feeder = myOpMode.hardwareMap.get(DcMotor.class, "feeder");
         flyWheel = myOpMode.hardwareMap.get(DcMotorEx.class, "flyWheel");
         intake1_2 = myOpMode.hardwareMap.get(CRServo.class,"intake1_2");
 
@@ -62,8 +62,9 @@ public class RobotBase extends DriveBase{
     private LaunchState launchState;
 
 
+    void launch(boolean shotRequested, int type) { //type 0 for short, 1 for long
 
-    void launch(boolean shotRequested) {
+        int shotRange = 500*type;
         switch (launchState) {
             case IDLE:
                 if (shotRequested) {
@@ -74,8 +75,8 @@ public class RobotBase extends DriveBase{
                 }//else if
                 break;
             case SPIN_UP:
-                flyWheel.setVelocity(LAUNCHER_TARGET_VELOCITY);
-                if (flyWheel.getVelocity() > LAUNCHER_MIN_VELOCITY) {
+                flyWheel.setVelocity(LAUNCHER_TARGET_VELOCITY+shotRange);
+                if (flyWheel.getVelocity() > LAUNCHER_MIN_VELOCITY+shotRange) {
                     launchState = LaunchState.LAUNCH;
                 }// if
                 break;
