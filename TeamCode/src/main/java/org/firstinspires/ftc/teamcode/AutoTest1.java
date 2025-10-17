@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 //import org.firstinspires.ftc.TeamCode;
 @Autonomous(name = "AutoTest1")
-public class AutoTest1 extends LinearOpMode {
+public class AutoTest1 extends JoulesTeleop {
     private ElapsedTime runtime = new ElapsedTime();
     static final double FORWARD_SPEED = 0.6;
     static final double TURN_SPEED    = 0.5;
@@ -19,7 +19,7 @@ public class AutoTest1 extends LinearOpMode {
 
     protected DcMotor flyWheelFour = null;
 
-    public void runOpMode()
+    /*public void runOpMode()
     {
 
         leftFrontDrive = hardwareMap.get(DcMotor.class, "leftFront");
@@ -70,5 +70,5 @@ public class AutoTest1 extends LinearOpMode {
         telemetry.addData("Path", "Complete");
         telemetry.update();
         sleep(1000);
-    }
+    }*/
 }
