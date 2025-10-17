@@ -98,4 +98,10 @@ public class RobotBase extends DriveBase{
 
     }*/
     }
+    //
+    void runIntake(double power)
+    {
+        intake1_2.setPower(power);
+
+    }
 }
