@@ -20,6 +20,8 @@ public class RobotBase extends DriveBase{
      * velocity. Here we are setting the target, and minimum velocity that the launcher should run
      * at. The minimum velocity is a threshold for determining when to fire.
      */
+
+    //TODO: change launch velocities
     final double LAUNCHER_TARGET_VELOCITY = 1125;
     final double LAUNCHER_MIN_VELOCITY = 1075;
 
@@ -63,7 +65,7 @@ public class RobotBase extends DriveBase{
 
 
     void launch(boolean shotRequested, int type) { //type 0 for short, 1 for long
-
+        //TODO: play with multiplier number plis
         int shotRange = 500*type;
         switch (launchState) {
             case IDLE:
