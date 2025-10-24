@@ -83,6 +83,7 @@ public class DriveBase
         double max;
 
         // This conversion is based on gmZero.org code
+        /*
         if(fieldCentric)
         {
             double botHeading = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
@@ -91,7 +92,7 @@ public class DriveBase
             axial = lateral * Math.sin(-botHeading) + axial * Math.cos(-botHeading);
 
             lateral = rotX;
-        }
+        }*/
 
         // Combine the joystick requests for each axis-motion to determine each wheel's power.
         // Set up a variable for each drive wheel to save the power level for telemetry.
