@@ -38,6 +38,7 @@ public class RobotBase extends DriveBase{
     }
     public void init()
     {
+        super.init();
         feeder = myOpMode.hardwareMap.get(DcMotor.class, "feeder");
         flyWheel = myOpMode.hardwareMap.get(DcMotorEx.class, "flyWheel");
         intake1_2 = myOpMode.hardwareMap.get(CRServo.class,"intake1_2");
