@@ -19,6 +19,9 @@ public class JoulesTeleop extends LinearOpMode {
         double drive;
         double turn;
 
+        //actually call the function
+        robot.init();
+
         waitForStart();
 
         while(opModeIsActive())
