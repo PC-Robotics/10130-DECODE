@@ -108,7 +108,7 @@ public class DriveBase
         rightFrontDrive.setPower(rightFrontPower);
         rightRearDrive.setPower(rightRearPower);
 
-        // Add data to the telemetry for displaying the current motor powers
+        // TODO: Add data to the telemetry for displaying the current motor powers
         myOpMode.telemetry.addData("Front left/Right", "%4.2f, %4.2f", leftFrontPower, rightFrontPower);
         myOpMode.telemetry.addData("Back  left/Right", "%4.2f, %4.2f", leftRearPower, rightRearPower);
         myOpMode.telemetry.addData("Heading",imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES));
