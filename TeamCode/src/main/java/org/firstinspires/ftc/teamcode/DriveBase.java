@@ -90,12 +90,20 @@ public class DriveBase
 
             double rotX = lateral * Math.cos(-botHeading) - axial * Math.sin(-botHeading);
             axial = lateral * Math.sin(-botHeading) + axial * Math.cos(-botHeading);
+            axial = lateral * Math.sin(-botHeading) + axial * Math.cos(-botHeading);
 
             lateral = rotX;
         }*/
 
         // Combine the joystick requests for each axis-motion to determine each wheel's power.
         // Set up a variable for each drive wheel to save the power level for telemetry.
+        /* og
+        double denominator = Math.max(Math.abs(axial)+Math.abs(lateral)+Math.abs(yaw),1);
+        double leftFrontPower  = (axial + lateral + yaw)/denominator;
+        double leftRearPower   = (axial - lateral + yaw)/denominator;
+        double rightFrontPower = (axial - lateral - yaw)/denominator;
+        double rightRearPower  = (axial + lateral - yaw)/denominator;
+        */
         double denominator = Math.max(Math.abs(axial)+Math.abs(lateral)+Math.abs(yaw),1);
         double leftFrontPower  = (axial + lateral + yaw)/denominator;
         double leftRearPower   = (axial - lateral + yaw)/denominator;
