@@ -6,6 +6,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+
 public class RobotBase extends DriveBase{
 
     //TODO: from carter - remember because changes
@@ -21,7 +23,7 @@ public class RobotBase extends DriveBase{
      * at. The minimum velocity is a threshold for determining when to fire.
      */
 
-    //TODO: change launch velocities
+    //TODO: change launch velocities for code to actually work
     final double LAUNCHER_TARGET_VELOCITY = 1125;
     final double LAUNCHER_MIN_VELOCITY = 1075;
 
@@ -66,7 +68,7 @@ public class RobotBase extends DriveBase{
 
 
     void launch(boolean shotRequested, int type) { //type 0 for short, 1 for long
-        //TODO: play with multiplier number plis
+        //TODO: play with multiplier number to make code actually work
         int shotRange = 500*type;
         switch (launchState) {
             case IDLE:
@@ -100,6 +102,8 @@ public class RobotBase extends DriveBase{
     /*public void runShooter(boolean isShooting){
 
     }*/
+        myOpMode.telemetry.addData("State", launchState);
+        myOpMode.telemetry.addData("motorSpeed", flyWheel.getVelocity());
     }
     //
     void runIntake(double power)
