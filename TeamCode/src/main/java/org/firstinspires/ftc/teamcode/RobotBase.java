@@ -64,7 +64,7 @@ public class RobotBase extends DriveBase{
         LAUNCHING,
     }
 
-    private LaunchState launchState;
+    private LaunchState launchState = LaunchState.IDLE;
 
 
     void launch(boolean shotRequested, int type) { //type 0 for short, 1 for long
