@@ -27,7 +27,7 @@ public class BlueAuto extends LinearOpMode {
 
         robot.drive(-.5, 0, 0);
 
-        sleep(2000);
+        sleep(2500);
 
         robot.drive(0,0,0);
 

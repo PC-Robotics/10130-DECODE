@@ -69,7 +69,7 @@ public class RobotBase extends DriveBase{
 
     void launch(boolean shotRequested, int type) { //type 0 for short, 1 for long
         //TODO: play with multiplier number to make code actually work
-        int shotRange = 500*type;
+        int shotRange = 10*type;
         switch (launchState) {
             case IDLE:
                 if (shotRequested) {
