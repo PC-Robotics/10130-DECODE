@@ -11,7 +11,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 public class RobotBase extends DriveBase{
 
     //TODO: from carter - remember because changes
-    final double FEED_TIME_SECONDS = 0.20; //The feeder servos run this long when a shot is requested.
+    final double FEED_TIME_SECONDS = 0.40; //The feeder servos run this long when a shot is requested.
     final double STOP_SPEED = 0.0; //We send this power to the servos when we want them to stop.
     final double FULL_SPEED = 1.0;
     final double LAUNCHDURATION_SECONDS = 2.0; //The amount of time to wait before turning off the flywheel
@@ -24,7 +24,7 @@ public class RobotBase extends DriveBase{
      */
 
     //TODO: change launch velocities for code to actually work
-    final double LAUNCHER_TARGET_VELOCITY = 1125;
+    final double LAUNCHER_TARGET_VELOCITY = 1115;
     final double LAUNCHER_MIN_VELOCITY = 1075;
 
     ElapsedTime feederTimer = new ElapsedTime();
@@ -46,7 +46,7 @@ public class RobotBase extends DriveBase{
         intake1_2 = myOpMode.hardwareMap.get(CRServo.class,"intake1_2");
 
         feeder.setDirection(DcMotor.Direction.REVERSE);
-        flyWheel.setDirection(DcMotor.Direction.REVERSE);
+        flyWheel.setDirection(DcMotor.Direction.FORWARD);
         intake1_2.setDirection(CRServo.Direction.FORWARD);
     }
 
