@@ -24,8 +24,8 @@ public class RobotBase extends DriveBase{
      */
 
     //TODO: change launch velocities for code to actually work
-    final double LAUNCHER_TARGET_VELOCITY = 1115;
-    final double LAUNCHER_MIN_VELOCITY = 1075;
+    final double LAUNCHER_TARGET_VELOCITY = 1115; //flyWheel
+    final double LAUNCHER_MIN_VELOCITY = 1075; //starts feeder
 
     ElapsedTime feederTimer = new ElapsedTime();
     ElapsedTime StopTimer = new ElapsedTime();
@@ -69,7 +69,7 @@ public class RobotBase extends DriveBase{
 
     void launch(boolean shotRequested, int type) { //type 0 for short, 1 for long
         //TODO: play with multiplier number to make code actually work
-        int shotRange = 10*type;
+        int shotRange = 10*type; //changes velocity for long range
         switch (launchState) {
             case IDLE:
                 if (shotRequested) {
