@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -23,7 +24,7 @@ public class RobotBase extends DriveBase{
      * at. The minimum velocity is a threshold for determining when to fire.
      */
 
-    //TODO: change launch velocities for code to actually wor
+    //TODO: change launch velocities for code to actually word
     final double LAUNCHER_TARGET_VELOCITY = 1115; //flyWheel
     final double LAUNCHER_MIN_VELOCITY = 1075; //starts feeder
 
@@ -31,9 +32,9 @@ public class RobotBase extends DriveBase{
     ElapsedTime StopTimer = new ElapsedTime();
 
     //mine again - this is fine
-    protected DcMotor feeder = null;
+    protected CRServo feeder = null;
     protected DcMotorEx flyWheel = null;
-    protected CRServo intake1_2 = null;
+    protected DcMotor intake1_2 = null;
     public RobotBase(LinearOpMode opMode, boolean isFc)
     {
         super(opMode,isFc);
@@ -41,13 +42,13 @@ public class RobotBase extends DriveBase{
     public void init()
     {
         super.init();
-        feeder = myOpMode.hardwareMap.get(DcMotor.class, "feeder");
+        feeder = myOpMode.hardwareMap.get(CRServo.class, "feeder");
         flyWheel = myOpMode.hardwareMap.get(DcMotorEx.class, "flyWheel");
-        intake1_2 = myOpMode.hardwareMap.get(CRServo.class,"intake1_2");
+        intake1_2 = myOpMode.hardwareMap.get(DcMotor.class,"intake1_2");
 
-        feeder.setDirection(DcMotor.Direction.REVERSE);
+        feeder.setDirection(CRServo.Direction.FORWARD);
         flyWheel.setDirection(DcMotor.Direction.FORWARD);
-        intake1_2.setDirection(CRServo.Direction.FORWARD);
+        intake1_2.setDirection(DcMotor.Direction.REVERSE);
     }
 
     /*public void runIntakes(double intakePower)
