@@ -23,7 +23,7 @@ public class RobotBase extends DriveBase{
      * at. The minimum velocity is a threshold for determining when to fire.
      */
 
-    //TODO: change launch velocities for code to actually work
+    //TODO: change launch velocities for code to actually wor
     final double LAUNCHER_TARGET_VELOCITY = 1115; //flyWheel
     final double LAUNCHER_MIN_VELOCITY = 1075; //starts feeder
 
