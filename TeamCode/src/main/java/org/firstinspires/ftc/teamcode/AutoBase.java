@@ -6,116 +6,43 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
-package org.firstinspires.ftc.teamcode;
-
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
+
 public class AutoBase extends LinearOpMode {
+    RobotBase robot;
 
-        //TODO: from carter - remember because changes
-        final double FEED_TIME_SECONDS = 0.40; //The feeder servos run this long when a shot is requested.
-        final double STOP_SPEED = 0.0; //We send this power to the servos when we want them to stop.
-        final double FULL_SPEED = 1.0;
-        final double LAUNCHDURATION_SECONDS = 2.0; //The amount of time to wait before turning off the flywheel
-
-        /*
-         * When we control our launcher motor, we are using encoders. These allow the control system
-         * to read the current speed of the motor and apply more or less power to keep it at a constant
-         * velocity. Here we are setting the target, and minimum velocity that the launcher should run
-         * at. The minimum velocity is a threshold for determining when to fire.
-         */
-
-        //TODO: change launch velocities for code to actually work
-        final double LAUNCHER_TARGET_VELOCITY = 1115; //flyWheel
-        final double LAUNCHER_MIN_VELOCITY = 1075; //starts feeder
-
-        ElapsedTime feederTimer = new ElapsedTime();
-        ElapsedTime StopTimer = new ElapsedTime();
-
-        //mine again - this is fine
-        protected DcMotor feeder = null;
-        protected DcMotorEx flyWheel = null;
-        protected CRServo intake1_2 = null;
-        public RobotBase(LinearOpMode opMode, boolean isFc)
-        {
-            super(opMode,isFc);
-        }
-        public void init()
-        {
-            super.init();
-            feeder = myOpMode.hardwareMap.get(DcMotor.class, "feeder");
-            flyWheel = myOpMode.hardwareMap.get(DcMotorEx.class, "flyWheel");
-            intake1_2 = myOpMode.hardwareMap.get(CRServo.class,"intake1_2");
-
-            feeder.setDirection(DcMotor.Direction.REVERSE);
-            flyWheel.setDirection(DcMotor.Direction.FORWARD);
-            intake1_2.setDirection(CRServo.Direction.FORWARD);
-        }
-
-        /*public void runIntakes(double intakePower)
-        {
-            //double feederPower = .7;
-            //double flyWheelPower = .7;
-            //double intake1_2Power = .7;
-            intake1_2.setPower(intakePower);
-        }*/
-        private enum LaunchState {
-            IDLE,
-            SPIN_UP,
-            LAUNCH,
-            LAUNCHING,
-        }
-
-        private org.firstinspires.ftc.teamcode.RobotBase.LaunchState launchState = org.firstinspires.ftc.teamcode.RobotBase.LaunchState.IDLE;
-
-
-        void launch(boolean shotRequested, int type) { //type 0 for short, 1 for long
-            //TODO: play with multiplier number to make code actually work
-            int shotRange = 10*type; //changes velocity for long range
-            switch (launchState) {
-                case IDLE:
-                    if (shotRequested) {
-                        launchState = org.firstinspires.ftc.teamcode.RobotBase.LaunchState.SPIN_UP;
-                    }//if
-                    else if (StopTimer.seconds() > LAUNCHDURATION_SECONDS) {
-                        flyWheel.setVelocity(0);
-                    }//else if
-                    break;
-                case SPIN_UP:
-                    flyWheel.setVelocity(LAUNCHER_TARGET_VELOCITY+shotRange);
-                    if (flyWheel.getVelocity() > LAUNCHER_MIN_VELOCITY+shotRange) {
-                        launchState = org.firstinspires.ftc.teamcode.RobotBase.LaunchState.LAUNCH;
-                    }// if
-                    break;
-                case LAUNCH:
-                    feeder.setPower(FULL_SPEED);
-                    feederTimer.reset();
-                    launchState = org.firstinspires.ftc.teamcode.RobotBase.LaunchState.LAUNCHING;
-                    break;
-                case LAUNCHING:
-                    if (feederTimer.seconds() > FEED_TIME_SECONDS) {
-                        launchState = org.firstinspires.ftc.teamcode.RobotBase.LaunchState.IDLE;
-                        StopTimer.reset();
-                        feeder.setPower(STOP_SPEED);
-                    }// if
-                    break;
-            }
-
-    /*public void runShooter(boolean isShooting){
-
-    }*/
-            myOpMode.telemetry.addData("State", launchState);
-            myOpMode.telemetry.addData("motorSpeed", flyWheel.getVelocity());
-        }
-        //
-        void runIntake(double power)
-        {
-            intake1_2.setPower(power);
-
-        }
+    public AutoBase()
+    {
+        robot = new RobotBase(this, false);
     }
+    @Override
+    public void runOpMode() throws InterruptedException {
+        robot.init();
+        waitForStart();
 
+        robot.drive(0, .5, 0);
+
+        sleep(1500);
+
+        robot.drive(0, 0, 0);
+
+        //TODO: type can be changed depending on needs
+        robot.launch(true, 1);
+
+        void leaveLaunchZone(int direction)
+        {
+
+            //make robot turn here
+
+            robot.drive(0, -.5, 0);
+
+            sleep(1500);
+
+            robot.drive(0, 0, 0);
+        }
+
+    }
 }
