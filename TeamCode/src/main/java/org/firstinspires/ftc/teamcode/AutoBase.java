@@ -12,6 +12,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 
 public class AutoBase extends LinearOpMode {
+
     RobotBase robot;
 
     public AutoBase()
@@ -32,10 +33,14 @@ public class AutoBase extends LinearOpMode {
         //TODO: type can be changed depending on needs
         robot.launch(true, 1);
 
-        void leaveLaunchZone(int direction)
+        void exitLaunchZone(int direction)
         {
 
-            //make robot turn here
+            robot.drive(0, 0, direction*.5);
+
+            sleep(1500);
+
+            robot.drive(0,0,0);
 
             robot.drive(0, -.5, 0);
 
