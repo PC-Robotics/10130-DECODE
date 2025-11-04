@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-@Autonomous(name="Blue Auto Test")
+@Autonomous(name="Blue Auto Field")
 public class BlueAuto extends LinearOpMode {
 
     RobotBase robot;
