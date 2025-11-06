@@ -28,7 +28,7 @@ public class RedLaunch extends LinearOpMode {
         robot.launch(true, 1);
 
     }
-    void exitLaunchZone ()
+    /*void exitLaunchZone ()
     {
 
         robot.drive(0, 0, -.5);
@@ -42,5 +42,5 @@ public class RedLaunch extends LinearOpMode {
         sleep(1500);
 
         robot.drive(0, 0, 0);
-    }
+    }*/
 }
