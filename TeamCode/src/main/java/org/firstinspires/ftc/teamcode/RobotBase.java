@@ -49,7 +49,7 @@ public class RobotBase extends DriveBase{
         //feeder intake is prob wrong
         feeder.setDirection(CRServo.Direction.REVERSE); //previous crservo
         flyWheel.setDirection(DcMotor.Direction.FORWARD);
-        intake1_2.setDirection(DcMotor.Direction.FORWARD);
+        intake1_2.setDirection(DcMotor.Direction.REVERSE);
     }
 
     /*public void runIntakes(double intakePower)
