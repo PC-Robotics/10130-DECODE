@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -45,7 +46,8 @@ public class RobotBase extends DriveBase{
         flyWheel = myOpMode.hardwareMap.get(DcMotorEx.class, "flyWheel");
         intake1_2 = myOpMode.hardwareMap.get(DcMotor.class,"intake1_2");
 
-        feeder.setDirection(CRServo.Direction.REVERSE);
+        //feeder intake is prob wrong
+        feeder.setDirection(DcMotorSimple.Direction.REVERSE); //previous crservo
         flyWheel.setDirection(DcMotor.Direction.FORWARD);
         intake1_2.setDirection(DcMotor.Direction.FORWARD);
     }
@@ -104,6 +106,7 @@ public class RobotBase extends DriveBase{
     }*/
         myOpMode.telemetry.addData("State", launchState);
         myOpMode.telemetry.addData("motorSpeed", flyWheel.getVelocity());
+        myOpMode.telemetry.addData("direction", intake1_2.getDirection());
     }
     //
     void runIntake(double power)
