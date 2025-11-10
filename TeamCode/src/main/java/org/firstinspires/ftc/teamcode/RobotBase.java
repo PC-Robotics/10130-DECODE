@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -32,7 +33,8 @@ public class RobotBase extends DriveBase{
 
     //mine again - this is fine
     protected CRServo feeder = null;
-    protected DcMotorEx flyWheel = null;
+    protected DcMotorEx flyWheelLeft = null;
+    protected DcMotorEx flyWheelRight = null;
     protected DcMotor intake1_2 = null;
     public RobotBase(LinearOpMode opMode, boolean isFc)
     {
@@ -42,11 +44,13 @@ public class RobotBase extends DriveBase{
     {
         super.init();
         feeder = myOpMode.hardwareMap.get(CRServo.class, "feeder");
-        flyWheel = myOpMode.hardwareMap.get(DcMotorEx.class, "flyWheel");
+        flyWheelLeft = myOpMode.hardwareMap.get(DcMotorEx.class, "flyWheelLeft");
+        flyWheelRight = myOpMode.hardwareMap.get(DcMotorEx.class, "flyWheelRight");
         intake1_2 = myOpMode.hardwareMap.get(DcMotor.class,"intake1_2");
 
         feeder.setDirection(CRServo.Direction.REVERSE);
-        flyWheel.setDirection(DcMotor.Direction.FORWARD);
+        flyWheelLeft.setDirection(DcMotor.Direction.FORWARD);
+        flyWheelRight.setDirection(DcMotor.Direction.REVERSE);
         intake1_2.setDirection(DcMotor.Direction.FORWARD);
     }
 
@@ -76,12 +80,14 @@ public class RobotBase extends DriveBase{
                     launchState = LaunchState.SPIN_UP;
                 }//if
                 else if (StopTimer.seconds() > LAUNCHDURATION_SECONDS) {
-                    flyWheel.setVelocity(0);
+                    flyWheelLeft.setVelocity(0);
+                    flyWheelRight.setVelocity(0);
                 }//else if
                 break;
             case SPIN_UP:
-                flyWheel.setVelocity(LAUNCHER_TARGET_VELOCITY+shotRange);
-                if (flyWheel.getVelocity() > LAUNCHER_MIN_VELOCITY+shotRange) {
+                flyWheelLeft.setVelocity(LAUNCHER_TARGET_VELOCITY+shotRange);
+                flyWheelRight.setVelocity(LAUNCHER_TARGET_VELOCITY+shotRange);
+                if (flyWheelLeft.getVelocity() > LAUNCHER_MIN_VELOCITY+shotRange && flyWheelRight.getVelocity() > LAUNCHER_MIN_VELOCITY) {
                     launchState = LaunchState.LAUNCH;
                 }// if
                 break;
@@ -103,7 +109,8 @@ public class RobotBase extends DriveBase{
 
     }*/
         myOpMode.telemetry.addData("State", launchState);
-        myOpMode.telemetry.addData("motorSpeed", flyWheel.getVelocity());
+        myOpMode.telemetry.addData("Left Flywheel", flyWheelLeft.getVelocity());
+        myOpMode.telemetry.addData("Right Flywheel",flyWheelRight.getVelocity());
     }
     //
     void runIntake(double power)
