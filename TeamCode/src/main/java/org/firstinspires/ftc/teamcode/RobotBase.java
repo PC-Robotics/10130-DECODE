@@ -34,6 +34,7 @@ public class RobotBase extends DriveBase{
     //mine again - this is fine
     protected CRServo feeder = null;
     protected DcMotorEx flyWheel = null;
+    protected DcMotorEx flyWheel2 = null;
     protected DcMotor intake1_2 = null;
     public RobotBase(LinearOpMode opMode, boolean isFc)
     {
@@ -44,11 +45,13 @@ public class RobotBase extends DriveBase{
         super.init();
         feeder = myOpMode.hardwareMap.get(CRServo.class, "feeder");
         flyWheel = myOpMode.hardwareMap.get(DcMotorEx.class, "flyWheel");
+        flyWheel2 = myOpMode.hardwareMap.get(DcMotorEx.class, "flyWheel2");
         intake1_2 = myOpMode.hardwareMap.get(DcMotor.class,"intake1_2");
 
         //feeder intake is prob wrong
         feeder.setDirection(CRServo.Direction.REVERSE); //previous crservo
         flyWheel.setDirection(DcMotor.Direction.FORWARD);
+        flyWheel2.setDirection(DcMotor.Direction.FORWARD);
         intake1_2.setDirection(DcMotor.Direction.REVERSE);
     }
 
@@ -79,11 +82,13 @@ public class RobotBase extends DriveBase{
                 }//if
                 else if (StopTimer.seconds() > LAUNCHDURATION_SECONDS) {
                     flyWheel.setVelocity(0);
+                    flyWheel2.setVelocity(0);
                 }//else if
                 break;
             case SPIN_UP:
                 flyWheel.setVelocity(LAUNCHER_TARGET_VELOCITY+shotRange);
-                if (flyWheel.getVelocity() > LAUNCHER_MIN_VELOCITY+shotRange) {
+                flyWheel2.setVelocity(LAUNCHER_TARGET_VELOCITY+shotRange);
+                if (flyWheel.getVelocity() > LAUNCHER_MIN_VELOCITY+shotRange && flyWheel2.getVelocity() > LAUNCHER_MIN_VELOCITY+shotRange) {
                     launchState = LaunchState.LAUNCH;
                 }// if
                 break;
@@ -106,6 +111,7 @@ public class RobotBase extends DriveBase{
     }*/
         myOpMode.telemetry.addData("State", launchState);
         myOpMode.telemetry.addData("motorSpeed", flyWheel.getVelocity());
+        myOpMode.telemetry.addData("motorSpeed2", flyWheel2.getVelocity());
         myOpMode.telemetry.addData("direction", intake1_2.getDirection());
     }
     //
