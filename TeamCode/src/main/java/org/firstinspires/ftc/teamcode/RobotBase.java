@@ -49,6 +49,7 @@ public class RobotBase extends DriveBase{
         intake1_2 = myOpMode.hardwareMap.get(DcMotor.class,"intake1_2");
 
         //feeder intake is prob wrong
+        //TODO: mess with the flywheels lol
         feeder.setDirection(CRServo.Direction.REVERSE); //previous crservo
         flyWheel.setDirection(DcMotor.Direction.FORWARD);
         flyWheel2.setDirection(DcMotor.Direction.FORWARD);
@@ -74,6 +75,7 @@ public class RobotBase extends DriveBase{
 
     void launch(boolean shotRequested, int type) { //type 0 for short, 1 for long
         //TODO: play with multiplier number to make code actually work
+        //TODO: mess with flywheel two lol
         int shotRange = 10*type; //changes velocity for long range
         switch (launchState) {
             case IDLE:
