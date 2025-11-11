@@ -51,7 +51,7 @@ public class RobotBase extends DriveBase{
         feeder.setDirection(CRServo.Direction.REVERSE);
         flyWheelLeft.setDirection(DcMotor.Direction.REVERSE);
         flyWheelRight.setDirection(DcMotor.Direction.FORWARD);
-        intake1_2.setDirection(DcMotor.Direction.FORWARD);
+        intake1_2.setDirection(DcMotor.Direction.REVERSE);
     }
 
     /*public void runIntakes(double intakePower)
