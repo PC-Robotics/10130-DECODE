@@ -17,6 +17,7 @@ public class LaunchBlue extends LinearOpMode {
         robot.init();
         waitForStart();
 
+
         robot.drive(.5, 0, 0);
 
         sleep(1500);
@@ -24,7 +25,9 @@ public class LaunchBlue extends LinearOpMode {
         robot.drive(0, 0, 0);
 
         //TODO: type can be changed depending on needs
-        robot.launch(true, 1);
+        robot.launch(true, 0);
+        telemetry.addData("Testing ",robot); // not reaching this TODO: fix
+        //exitLaunchZone();
 
     }
     void exitLaunchZone ()
