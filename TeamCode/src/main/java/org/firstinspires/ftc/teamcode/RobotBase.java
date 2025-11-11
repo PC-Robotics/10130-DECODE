@@ -49,8 +49,8 @@ public class RobotBase extends DriveBase{
         intake1_2 = myOpMode.hardwareMap.get(DcMotor.class,"intake1_2");
 
         feeder.setDirection(CRServo.Direction.REVERSE);
-        flyWheelLeft.setDirection(DcMotor.Direction.FORWARD);
-        flyWheelRight.setDirection(DcMotor.Direction.REVERSE);
+        flyWheelLeft.setDirection(DcMotor.Direction.REVERSE);
+        flyWheelRight.setDirection(DcMotor.Direction.FORWARD);
         intake1_2.setDirection(DcMotor.Direction.FORWARD);
     }
 
