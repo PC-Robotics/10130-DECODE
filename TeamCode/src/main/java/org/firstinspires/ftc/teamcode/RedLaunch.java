@@ -18,7 +18,7 @@ public class RedLaunch extends LinearOpMode {
         robot.init();
         waitForStart();
 
-        robot.drive(0, -.5, 0);
+        robot.drive(0, .5, 0);
 
         sleep(1500);
 
