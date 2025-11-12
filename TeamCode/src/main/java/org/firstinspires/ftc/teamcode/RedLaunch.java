@@ -25,7 +25,7 @@ public class RedLaunch extends LinearOpMode {
         robot.drive(0, 0, 0);
 
         //TODO: type can be changed depending on needs
-        robot.launch(true, 1);
+        robot.launch(true);
 
     }
     /*void exitLaunchZone ()

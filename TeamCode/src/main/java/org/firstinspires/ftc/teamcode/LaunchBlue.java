@@ -25,7 +25,7 @@ public class LaunchBlue extends LinearOpMode {
         robot.drive(0, 0, 0);
 
         //TODO: type can be changed depending on needs
-        robot.launch(true, 0);
+        robot.launch(true);
         telemetry.addData("Testing ",robot); // not reaching this TODO: fix
         //exitLaunchZone();
 

@@ -71,9 +71,8 @@ public class RobotBase extends DriveBase{
     private LaunchState launchState = LaunchState.IDLE;
 
 
-    void launch(boolean shotRequested, int type) { //type 0 for short, 1 for long
+    void launch(boolean shotRequested) { //type 0 for short, 1 for long
         //TODO: play with multiplier number to make code actually work
-        int shotRange = 10*type; //changes velocity for long range
         switch (launchState) {
             case IDLE:
                 if (shotRequested) {
@@ -85,9 +84,9 @@ public class RobotBase extends DriveBase{
                 }//else if
                 break;
             case SPIN_UP:
-                flyWheelLeft.setVelocity(LAUNCHER_TARGET_VELOCITY+shotRange);
-                flyWheelRight.setVelocity(LAUNCHER_TARGET_VELOCITY+shotRange);
-                if (flyWheelLeft.getVelocity() > LAUNCHER_MIN_VELOCITY+shotRange && flyWheelRight.getVelocity() > LAUNCHER_MIN_VELOCITY) {
+                flyWheelLeft.setVelocity(LAUNCHER_TARGET_VELOCITY);
+                flyWheelRight.setVelocity(LAUNCHER_TARGET_VELOCITY);
+                if (flyWheelLeft.getVelocity() > LAUNCHER_MIN_VELOCITY && flyWheelRight.getVelocity() > LAUNCHER_MIN_VELOCITY) {
                     launchState = LaunchState.LAUNCH;
                 }// if
                 break;
