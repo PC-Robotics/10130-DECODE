@@ -4,10 +4,10 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
+//import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+//import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 public class RobotBase extends DriveBase{
 
@@ -25,8 +25,8 @@ public class RobotBase extends DriveBase{
      */
 
     //TODO: change launch velocities for code to actually work
-    final double LAUNCHER_TARGET_VELOCITY = 1115; //flyWheel
-    final double LAUNCHER_MIN_VELOCITY = 1075; //starts feeder
+    final double LAUNCHER_TARGET_VELOCITY = 1525; //flyWheel
+    final double LAUNCHER_MIN_VELOCITY = 1225; //starts feeder
 
     ElapsedTime feederTimer = new ElapsedTime();
     ElapsedTime StopTimer = new ElapsedTime();
