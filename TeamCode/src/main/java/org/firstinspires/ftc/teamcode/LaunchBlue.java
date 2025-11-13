@@ -30,7 +30,7 @@ public class LaunchBlue extends LinearOpMode {
         //exitLaunchZone();
 
     }
-    void exitLaunchZone ()
+    /*void exitLaunchZone ()
     {
 
         robot.drive(0, 0, .5);
@@ -44,6 +44,6 @@ public class LaunchBlue extends LinearOpMode {
         sleep(1500);
 
         robot.drive(0, 0, 0);
-    }
+    }*/
 }
 

@@ -19,7 +19,7 @@ public class RedAuto extends LinearOpMode {
 
         robot.drive(0, -.5, 0);
 
-        sleep(1500);
+        sleep(1250);
 
         robot.drive(0, 0, 0);
 
