@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.opMode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -25,8 +26,7 @@ public class RedLaunch extends LinearOpMode {
     protected boolean fieldCentric = false;
     protected IMU imu = null;
 
-    public RedLaunch(LinearOpMode opMode, boolean isFC)
-    {
+    public RedLaunch(LinearOpMode opMode, boolean isFC) {
         robot = new RobotBase(this, false);
         myOpMode = opMode;
         fieldCentric = isFC;
@@ -84,8 +84,8 @@ public class RedLaunch extends LinearOpMode {
         COMPLETE;
     }
 
-    @Override
-    public void loop() {
+    //@Override
+    public void loop67() {
         /*
          * TECH TIP: Switch Statements
          * switch statements are an excellent way to take advantage of an enum. They work very
@@ -95,7 +95,7 @@ public class RedLaunch extends LinearOpMode {
          * of the members of the enum for a match, since if we find the "break" line in one case,
          * we know our enum isn't reflecting a different state.
          */
-        switch (autonomousState){
+        switch (autonomousState) {
             /*
              * Since the first state of our auto is LAUNCH, this is the first "case" we encounter.
              * This case is very simple. We call our .launch() function with "true" in the parameter.
@@ -121,9 +121,9 @@ public class RedLaunch extends LinearOpMode {
                  * state on our state machine. Otherwise, we reset the encoders on our drive motors
                  * and move onto the next state.
                  */
-                if(robot.launch(false)) {
+                if (robot.launch(false)) {
                     shotsToFire -= 1;
-                    if(shotsToFire > 0) {
+                    if (shotsToFire > 0) {
                         autonomousState = RedLaunch.AutonomousState.LAUNCH;
                     } else {
                         leftFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -135,4 +135,6 @@ public class RedLaunch extends LinearOpMode {
                         autonomousState = RedLaunch.AutonomousState.DRIVING_AWAY_FROM_GOAL;
                     }
                 }
+        }
+    }
 }
