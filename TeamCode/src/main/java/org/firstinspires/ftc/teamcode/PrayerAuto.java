@@ -65,7 +65,17 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 @Autonomous(name="ModdedStarterBotAuto")
 //@Disableda
 public class PrayerAuto extends OpMode
+
+
 {
+    PrayerAuto robot;
+
+    public PrayerAuto()
+    {
+        robot = new PrayerAuto(this, false);
+    }
+
+
 
     final double FEED_TIME = 0.20; //The feeder servos run this long when a shot is requested.
 
@@ -102,7 +112,7 @@ public class PrayerAuto extends OpMode
     final double TICKS_PER_MM = (ENCODER_TICKS_PER_REV / (WHEEL_DIAMETER_MM * Math.PI));
     final double TRACK_WIDTH_MM = 404;
 
-    int shotsToFire = 3; //The number of shots to fire in this auto.
+    int shotsToFire = 2; //The number of shots to fire in this auto.
 
     double robotRotationAngle = 45;
 
@@ -124,6 +134,10 @@ public class PrayerAuto extends OpMode
     private DcMotorEx flyWheelRight = null;
 
     private CRServo feeder = null;
+
+    public PrayerAuto(PrayerAuto prayerAuto, boolean b) {
+    }
+
     /*
      * TECH TIP: State Machines
      * We use "state machines" in a few different ways in this auto. The first step of a state
@@ -156,6 +170,8 @@ public class PrayerAuto extends OpMode
      * Here is our auto state machine enum. This captures each action we'd like to do in auto.
      */
     private enum AutonomousState {
+
+        MOVE_FORWARD,
         LAUNCH,
         WAIT_FOR_LAUNCH,
         STRAFE_RIGHT,
@@ -187,7 +203,7 @@ public class PrayerAuto extends OpMode
          * Later in our code, we will progress through the state machine by moving to other enum members.
          * We do the same for our launcher state machine, setting it to IDLE before we use it later.
          */
-        autonomousState = AutonomousState.LAUNCH;
+        autonomousState = AutonomousState.MOVE_FORWARD;
         launchState = LaunchState.IDLE;
 
 
@@ -216,6 +232,8 @@ public class PrayerAuto extends OpMode
         rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
         leftRearDrive.setDirection(DcMotor.Direction.REVERSE);
         rightRearDrive.setDirection(DcMotor.Direction.FORWARD);
+        flyWheelRight.setDirection(DcMotor.Direction.FORWARD);
+        flyWheelLeft.setDirection(DcMotor.Direction.REVERSE);
 
         /*
          * Here we reset the encoders on our drive motors before we start moving.
@@ -295,6 +313,7 @@ public class PrayerAuto extends OpMode
      */
     @Override
     public void start() {
+        driveTimer.reset();
     }
 
     /*
@@ -312,6 +331,19 @@ public class PrayerAuto extends OpMode
          * we know our enum isn't reflecting a different state.
          */
         switch (autonomousState) {
+
+            case MOVE_FORWARD:
+                leftFrontDrive.setPower(0.5);
+                leftRearDrive.setPower(0.5);
+                rightFrontDrive.setPower(0.5);
+                rightRearDrive.setPower(0.5);
+                if (driveTimer.milliseconds() > 2000){
+                    leftFrontDrive.setPower(0);
+                    leftRearDrive.setPower(0);
+                    rightFrontDrive.setPower(0);
+                    rightRearDrive.setPower(0);
+                    autonomousState = AutonomousState.LAUNCH;
+                }
             /*
              * Since the first state of our auto is LAUNCH, this is the first "case" we encounter.
              * This case is very simple. We call our .launch() function with "true" in the parameter.
@@ -404,7 +436,7 @@ public class PrayerAuto extends OpMode
                 rightFrontDrive.setPower(-0.5);
                 rightRearDrive.setPower(0.5);
 
-                if (driveTimer.milliseconds() > 1500) {
+                if (driveTimer.milliseconds() > 2500) {
                     leftFrontDrive.setPower(0);
                     leftRearDrive.setPower(0);
                     rightFrontDrive.setPower(0);
