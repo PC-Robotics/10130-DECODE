@@ -71,7 +71,7 @@ public class RobotBase extends DriveBase{
     private LaunchState launchState = LaunchState.IDLE;
 
 
-    void launch(boolean shotRequested) { //type 0 for short, 1 for long
+    boolean launch(boolean shotRequested) { //type 0 for short, 1 for long
         //TODO: play with multiplier number to make code actually work
         switch (launchState) {
             case IDLE:
@@ -110,6 +110,7 @@ public class RobotBase extends DriveBase{
         myOpMode.telemetry.addData("State", launchState);
         myOpMode.telemetry.addData("Left Flywheel", flyWheelLeft.getVelocity());
         myOpMode.telemetry.addData("Right Flywheel",flyWheelRight.getVelocity());
+        return shotRequested;
     }
     //
     void runIntake(double power)
