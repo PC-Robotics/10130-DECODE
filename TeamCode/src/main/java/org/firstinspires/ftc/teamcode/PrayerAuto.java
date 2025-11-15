@@ -196,13 +196,13 @@ public class PrayerAuto extends OpMode
          * to 'get' must correspond to the names assigned during the robot configuration
          * step (using the FTC Robot Controller app on the driver's station).
          */
-        leftFrontDrive  = hardwareMap.get(DcMotor.class, "left_front_drive");
-        rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front_drive");
-        leftRearDrive  = hardwareMap.get(DcMotor.class, "left_rear_drive");
-        rightRearDrive = hardwareMap.get(DcMotor.class, "right_rear_drive");
-        flyWheelLeft = hardwareMap.get(DcMotorEx.class,"left_flywheel");
-        flyWheelRight = hardwareMap.get(DcMotorEx.class,"right_flywheel");
-        feeder = hardwareMap.get(CRServo.class, "left_feeder");
+        leftFrontDrive  = hardwareMap.get(DcMotor.class, "leftFront");
+        rightFrontDrive = hardwareMap.get(DcMotor.class, "rightFront");
+        leftRearDrive  = hardwareMap.get(DcMotor.class, "leftRear");
+        rightRearDrive = hardwareMap.get(DcMotor.class, "rightRear");
+        flyWheelLeft = hardwareMap.get(DcMotorEx.class,"flyWheelLeft");
+        flyWheelRight = hardwareMap.get(DcMotorEx.class,"flyWheelRight");
+        feeder = hardwareMap.get(CRServo.class, "feeder");
 
         /*
          * To drive forward, most robots need the motor on one side to be reversed,
