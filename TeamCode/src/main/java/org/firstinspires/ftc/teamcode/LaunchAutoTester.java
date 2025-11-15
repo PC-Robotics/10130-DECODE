@@ -1,5 +1,5 @@
 
-package org.firstinspires.ftc.teamcode;
+/*package org.firstinspires.ftc.teamcode;
 import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE;
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad1;
 
@@ -27,20 +27,20 @@ public class LaunchAutoTester extends RobotBase
      * to read the current speed of the motor and apply more or less power to keep it at a constant
      * velocity. Here we are setting the target and minimum velocity that the launcher should run
      * at. The minimum velocity is a threshold for determining when to fire.
-     */
+
     final double LAUNCHER_TARGET_VELOCITY = 1525;
     final double LAUNCHER_MIN_VELOCITY = 1425;
 
-    /*
+
      * The number of seconds that we wait between each of our 3 shots from the launcher. This
      * can be much shorter, but the longer break is reasonable since it maximizes the likelihood
      * that each shot will score.
-     */
+
 
     //TODO: change time value
     final double TIME_BETWEEN_SHOTS = 2;
 
-    /*
+
      * Here we capture a few variables used in driving the robot. DRIVE_SPEED and ROTATE_SPEED
      * are from 0-1, with 1 being full speed. Encoder ticks per revolution is specific to the motor
      * ratio that we use in the kit; if you're using a different motor, this value can be found on
@@ -48,7 +48,7 @@ public class LaunchAutoTester extends RobotBase
      * Track width is the distance between the center of the drive wheels on either side of the
      * robot. Track width is used to determine the amount of linear distance each wheel needs to
      * travel to create a specified rotation of the robot.
-     */
+
     //TODO: change values
     final double DRIVE_SPEED = 0.5;
     final double ROTATE_SPEED = 0.2;
@@ -61,11 +61,11 @@ public class LaunchAutoTester extends RobotBase
 
     double robotRotationAngle = 45;
 
-    /*
+
      * Here we create three timers which we use in different parts of our code. Each of these is an
      * "object," so even though they are all an instance of ElapsedTime(), they count independently
      * from each other.
-     */
+
     private final ElapsedTime shotTimer = new ElapsedTime();
     private final ElapsedTime feederTimer = new ElapsedTime();
     private final ElapsedTime driveTimer = new ElapsedTime();
@@ -93,23 +93,23 @@ public class LaunchAutoTester extends RobotBase
      * It starts at IDLE. When a shot is requested from the user, it'll move into PREPARE then LAUNCH.
      * We can use higher level code to cycle through these states, but this allows us to write
      * functions and autonomous routines in a way that avoids loops within loops, and "waits."
-     */
+
     private enum LaunchState {
         IDLE,
         PREPARE,
         LAUNCH,
     }
 
-    /*
+
      * Here we create the instance of LaunchState that we use in code. This creates a unique object
      * which can store the current condition of the shooter. In other applications, you may have
      * multiple copies of the same enum which have different names. Here we just have one.
-     */
+
     private LaunchState launchState;
 
-    /*
+
      * Here is our auto state machine enum. This captures each action we'd like to do in auto.
-     */
+
     private enum AutonomousState {
         LAUNCH,
         WAIT_FOR_LAUNCH,
@@ -121,17 +121,17 @@ public class LaunchAutoTester extends RobotBase
 
     private AutonomousState autonomousState;
 
-    /*
+
      * Here we create an enum not to create a state machine, but to capture which alliance we are on.
-     */
+
     private enum Alliance {
         RED,
         BLUE;
     }
 
-    /*
+
      * When we create the instance of our enum we can also assign a default state.
-     */
+
     private Alliance alliance = Alliance.RED;
 
     @Override
@@ -139,21 +139,21 @@ public class LaunchAutoTester extends RobotBase
 
     }
 
-    /*
+
      * This code runs ONCE when the driver hits INIT.
-     */
+
     @Override
     public void init() {
-        /*
+
          * Here we set the first step of our autonomous state machine by setting autoStep = AutoStep.LAUNCH.
          * Later in our code, we will progress through the state machine by moving to other enum members.
          * We do the same for our launcher state machine, setting it to IDLE before we use it later.
-         */
+
         autonomousState = AutonomousState.LAUNCH;
         launchState = LaunchState.IDLE;
 
 
-        /*
+
          * Initialize the hardware variables. Note that the strings used here as parameters
          * to 'get' must correspond to the names assigned during the robot configuration
          * step (using the FTC Robot Controller app on the driver's station).
@@ -181,17 +181,17 @@ public class LaunchAutoTester extends RobotBase
 
 
          * Here we reset the encoders on our drive motors before we start moving.
-         */
+
         leftFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftRearDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightRearDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        /*
+
          * Setting zeroPowerBehavior to BRAKE enables a "brake mode." This causes the motor to
          * slow down much faster when it is coasting. This creates a much more controllable
          * drivetrain, as the robot stops much quicker.
-         * */
+         *
 
         leftFrontDrive.setZeroPowerBehavior(BRAKE);
         rightFrontDrive.setZeroPowerBehavior(BRAKE);
@@ -199,24 +199,24 @@ public class LaunchAutoTester extends RobotBase
         rightRearDrive.setZeroPowerBehavior(BRAKE);
         launcher.setZeroPowerBehavior(BRAKE);
 
-        /*
+
          * Here we set our launcher to the RUN_USING_ENCODER runmode.
          * If you notice that you have no control over the velocity of the motor, and it just jumps
          * right to a number much higher than your set point, make sure that your encoders are plugged
          * into the port right beside the motor itself.
-         */
+
         launcher.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        /*
+
          * Here we set the aforementioned PID coefficients. You shouldn't have to do this for any
          * other motors on this robot.
-         */
+
         launcher.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER,new PIDFCoefficients(300,0,0,10));
 
-        /*
+
          * Much like our drivetrain motors, we set the left feeder servo to reverse so that they
          * both work to feed the ball into the robot.
-         */
+
         feeder.setDirection(DcMotorSimple.Direction.REVERSE);
 
 
@@ -224,22 +224,22 @@ public class LaunchAutoTester extends RobotBase
         telemetry.addData("Status", "Initialized");
     }
 
-    /*
+
      * This code runs REPEATEDLY after the driver hits INIT, but before they hit START.
-     */
+
     @Override
     public void init_loop() {
-        /*
+
          * We also set the servo power to 0 here to make sure that the servo controller is booted
          * up and ready to go.
-         */
+
         rightFeeder.setPower(0);
         leftFeeder.setPower(0);
 
 
-        /*
+
          * Here we allow the driver to select which alliance we are on using the gamepad.
-         */
+
         if (gamepad1.b) {
             alliance = Alliance.RED;
         } else if (gamepad1.x) {
@@ -253,17 +253,17 @@ public class LaunchAutoTester extends RobotBase
 
     /*
      * This code runs ONCE when the driver hits START.
-     */
+
     @Override
     public void start() {
     }
 
-    /*
+
      * This code runs REPEATEDLY after the driver hits START but before they hit STOP.
-     */
+
     @Override
     public void loop() {
-        /*
+
          * TECH TIP: Switch Statements
          * switch statements are an excellent way to take advantage of an enum. They work very
          * similarly to a series of "if" statements, but allow for cleaner and more readable code.
@@ -271,23 +271,23 @@ public class LaunchAutoTester extends RobotBase
          * reflects that state. We end each case with "break" to skip out of checking the rest
          * of the members of the enum for a match, since if we find the "break" line in one case,
          * we know our enum isn't reflecting a different state.
-         */
+
         switch (autonomousState){
-            /*
+
              * Since the first state of our auto is LAUNCH, this is the first "case" we encounter.
              * This case is very simple. We call our .launch() function with "true" in the parameter.
              * This "true" value informs our launch function that we'd like to start the process of
              * firing a shot. We will call this function with a "false" in the next case. This
              * "false" condition means that we are continuing to call the function every loop,
              * allowing it to cycle through and continue the process of launching the first ball.
-             */
+
             case LAUNCH:
                 launch(true);
                 autonomousState = AutonomousState.WAIT_FOR_LAUNCH;
                 break;
 
             case WAIT_FOR_LAUNCH:
-                /*
+
                  * A technique we leverage frequently in this code are functions which return a
                  * boolean. We are using this function in two ways. This function actually moves the
                  * motors and servos in a way that launches the ball, but it also "talks back" to
@@ -297,7 +297,7 @@ public class LaunchAutoTester extends RobotBase
                  * one from the shotsToFire variable. If shots remain, we move back to the LAUNCH
                  * state on our state machine. Otherwise, we reset the encoders on our drive motors
                  * and move onto the next state.
-                 */
+
                 if(launch(false)) {
                     shotsToFire -= 1;
                     if(shotsToFire > 0) {
@@ -312,11 +312,11 @@ public class LaunchAutoTester extends RobotBase
                 break;
 
             case DRIVING_AWAY_FROM_GOAL:
-                /*
+
                  * This is another function that returns a boolean. This time we return "true" if
                  * the robot has been within a tolerance of the target position for "holdSeconds."
                  * Once the function returns "true" we reset the encoders again and move on.
-                 */
+
                 if(drive(DRIVE_SPEED, -4, DistanceUnit.INCH, 1)){
                     leftFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                     rightFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -347,14 +347,14 @@ public class LaunchAutoTester extends RobotBase
                 break;
         }
 
-        /*
+
          * Here is our telemetry that keeps us informed of what is going on in the robot. Since this
          * part of the code exists outside of our switch statement, it will run once every loop.
          * No matter what state our robot is in. This is the huge advantage of using state machines.
          * We can have code inside of our state machine that runs only when necessary, and code
          * after the last "case" that runs every loop. This means we can avoid a lot of
          * "copy-and-paste" that non-state machine autonomous routines fall into.
-         */
+
         telemetry.addData("AutoState", autonomousState);
         telemetry.addData("LauncherState", launchState);
         telemetry.addData("Motor Current Positions", "left (%d), right (%d)",
@@ -362,13 +362,13 @@ public class LaunchAutoTester extends RobotBase
         telemetry.addData("Motor Target Positions", "left (%d), right (%d)",
                 leftDrive.getTargetPosition(), rightDrive.getTargetPosition());
         telemetry.update();
-    }
+    }*/
 
     /*
      * This code runs ONCE after the driver hits STOP.
      */
-    @Override
-    public void stop() {
+    /*@Override
+    public void stop() {/*
     }
 
     /**
@@ -380,7 +380,7 @@ public class LaunchAutoTester extends RobotBase
      *                      state machine and launch the ball.
      * @return "true" for one cycle after a ball has been successfully launched, "false" otherwise.
      */
-    boolean launch(boolean shotRequested){
+    /*boolean launch(boolean shotRequested){
         switch (launchState) {
             case IDLE:
                 if (shotRequested) {
@@ -409,7 +409,7 @@ public class LaunchAutoTester extends RobotBase
                 }
         }
         return false;
-    }
+    }*/
 
     /**
      * @param speed From 0-1
@@ -418,10 +418,10 @@ public class LaunchAutoTester extends RobotBase
      * @param holdSeconds the number of seconds to wait at position before returning true.
      * @return "true" if the motors are within tolerance of the target position for more than
      * holdSeconds. "false" otherwise.
-     */
+     *//*
     boolean drive(double speed, double distance, DistanceUnit distanceUnit, double holdSeconds) {
         final double TOLERANCE_MM = 10;
-        /*
+
          * In this function we use a DistanceUnits. This is a class that the FTC SDK implements
          * which allows us to accept different input units depending on the user's preference.
          * To use these, put both a double and a DistanceUnit as parameters in a function and then
@@ -429,7 +429,7 @@ public class LaunchAutoTester extends RobotBase
          * to whatever distance in the unit specified. We are working in mm for this, so that's the
          * unit we request from distanceUnit. But if we want to use inches in our function, we could
          * use distanceUnit.toInches() instead!
-         */
+
         double targetPosition = (distanceUnit.toMm(distance) * TICKS_PER_MM);
 
         leftDrive.setTargetPosition((int) targetPosition);
@@ -447,13 +447,13 @@ public class LaunchAutoTester extends RobotBase
          * and compare that to our tolerance. If we have not reached our target yet, then we reset
          * the driveTimer. Only after we reach the target can the timer count higher than our
          * holdSeconds variable.
-         */
+
         if(Math.abs(targetPosition - leftDrive.getCurrentPosition()) > (TOLERANCE_MM * TICKS_PER_MM)){
             driveTimer.reset();
         }
 
         return (driveTimer.seconds() > holdSeconds);
-    }
+    }/*
 
     /**
      * @param speed From 0-1
@@ -463,6 +463,7 @@ public class LaunchAutoTester extends RobotBase
      * @return True if the motors are within tolerance of the target position for more than
      *         holdSeconds. False otherwise.
      */
+    /*
     boolean rotate(double speed, double angle, AngleUnit angleUnit, double holdSeconds){
         final double TOLERANCE_MM = 10;
 
@@ -508,4 +509,4 @@ public class LaunchAutoTester extends RobotBase
 
         return (driveTimer.seconds() > holdSeconds);
     }
-}
+}*/
