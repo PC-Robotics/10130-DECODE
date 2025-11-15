@@ -475,13 +475,13 @@ public class LaunchAutoTester extends RobotBase
          * that the robot tracks when it is rotating. So, to find the number of mm that our wheels
          * need to travel, we just need to multiply the requested angle in radians by the radius
          * of our turning circle.
-         */
+
         double targetMm = angleUnit.toRadians(angle)*(TRACK_WIDTH_MM/2);
 
-        /*
+
          * We need to set the left motor to the inverse of the target so that we rotate instead
          * of driving straight.
-         */
+
         double leftTargetPosition = -(targetMm*TICKS_PER_MM);
         double rightTargetPosition = targetMm*TICKS_PER_MM;
 
