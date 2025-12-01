@@ -333,15 +333,21 @@ public class PrayerAuto extends OpMode
         switch (autonomousState) {
 
             case MOVE_FORWARD:
+                leftFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                rightFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                leftRearDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                rightRearDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 leftFrontDrive.setPower(0.5);
                 leftRearDrive.setPower(0.5);
                 rightFrontDrive.setPower(0.5);
                 rightRearDrive.setPower(0.5);
                 if (driveTimer.milliseconds() > 2000){
-                    leftFrontDrive.setPower(0);
-                    leftRearDrive.setPower(0);
-                    rightFrontDrive.setPower(0);
-                    rightRearDrive.setPower(0);
+                    leftFrontDrive.setZeroPowerBehavior(BRAKE);
+                    rightFrontDrive.setZeroPowerBehavior(BRAKE);
+                    leftRearDrive.setZeroPowerBehavior(BRAKE);
+                    rightRearDrive.setZeroPowerBehavior(BRAKE);
+                    flyWheelLeft.setZeroPowerBehavior(BRAKE);
+                    flyWheelRight.setZeroPowerBehavior(BRAKE);
                     autonomousState = AutonomousState.LAUNCH;
                 }
             /*
@@ -431,16 +437,22 @@ public class PrayerAuto extends OpMode
  */
 
             case STRAFE_RIGHT:
+                leftFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                rightFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                leftRearDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                rightRearDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 leftFrontDrive.setPower(0.5);
                 leftRearDrive.setPower(-0.5);
                 rightFrontDrive.setPower(-0.5);
                 rightRearDrive.setPower(0.5);
 
                 if (driveTimer.milliseconds() > 2500) {
-                    leftFrontDrive.setPower(0);
-                    leftRearDrive.setPower(0);
-                    rightFrontDrive.setPower(0);
-                    rightRearDrive.setPower(0);
+                    leftFrontDrive.setZeroPowerBehavior(BRAKE);
+                    rightFrontDrive.setZeroPowerBehavior(BRAKE);
+                    leftRearDrive.setZeroPowerBehavior(BRAKE);
+                    rightRearDrive.setZeroPowerBehavior(BRAKE);
+                    flyWheelLeft.setZeroPowerBehavior(BRAKE);
+                    flyWheelRight.setZeroPowerBehavior(BRAKE);
 
                     autonomousState = AutonomousState.COMPLETE;
                 }
