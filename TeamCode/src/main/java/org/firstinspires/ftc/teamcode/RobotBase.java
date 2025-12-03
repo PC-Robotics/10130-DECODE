@@ -25,8 +25,8 @@ public class RobotBase extends DriveBase{
      */
 
     //TODO: change launch velocities for code to actually work
-    final double LAUNCHER_TARGET_VELOCITY = 925; //flyWheel
-    final double LAUNCHER_MIN_VELOCITY = 825; //starts feeder
+    protected double LAUNCHER_TARGET_VELOCITY = 925; //flyWheel
+    protected double LAUNCHER_MIN_VELOCITY = 825; //starts feeder
 
     ElapsedTime feederTimer = new ElapsedTime();
     ElapsedTime StopTimer = new ElapsedTime();
@@ -103,13 +103,48 @@ public class RobotBase extends DriveBase{
                 }// if
                 break;
         }
-
     /*public void runShooter(boolean isShooting){
 
     }*/
         myOpMode.telemetry.addData("State", launchState);
         myOpMode.telemetry.addData("Left Flywheel", flyWheelLeft.getVelocity());
         myOpMode.telemetry.addData("Right Flywheel",flyWheelRight.getVelocity());
+        return shotRequested;
+    }
+    boolean launch2(boolean shotRequested) { //type 0 for short, 1 for long
+        LAUNCHER_MIN_VELOCITY += 200;
+        LAUNCHER_TARGET_VELOCITY += 200;
+        //TODO: play with multiplier number to make code actually work
+        switch (launchState) {
+            case IDLE:
+                if (shotRequested) {
+                    launchState = LaunchState.SPIN_UP;
+                }//if
+                else if (StopTimer.seconds() > LAUNCHDURATION_SECONDS) {
+                    flyWheelLeft.setVelocity(0);
+                    flyWheelRight.setVelocity(0);
+                }//else if
+                break;
+            case SPIN_UP:
+                flyWheelLeft.setVelocity(LAUNCHER_TARGET_VELOCITY);
+                flyWheelRight.setVelocity(LAUNCHER_TARGET_VELOCITY);
+                if (flyWheelLeft.getVelocity() > LAUNCHER_MIN_VELOCITY && flyWheelRight.getVelocity() > LAUNCHER_MIN_VELOCITY) {
+                    launchState = LaunchState.LAUNCH;
+                }// if
+                break;
+            case LAUNCH:
+                feeder.setPower(FULL_SPEED);
+                feederTimer.reset();
+                launchState = LaunchState.LAUNCHING;
+                break;
+            case LAUNCHING:
+                if (feederTimer.seconds() > FEED_TIME_SECONDS) {
+                    launchState = LaunchState.IDLE;
+                    StopTimer.reset();
+                    feeder.setPower(STOP_SPEED);
+                }// if
+                break;
+        }
         return shotRequested;
     }
     //

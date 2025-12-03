@@ -34,7 +34,7 @@ public class JoulesTeleop extends LinearOpMode {
 
             robot.launch(gamepad1.left_bumper);
             if (gamepad1.left_trigger > .4) {
-                robot.launch(true);
+                robot.launch2(true);
             }
             robot.runIntake(gamepad1.right_trigger);
 
