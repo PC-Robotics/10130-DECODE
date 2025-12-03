@@ -25,8 +25,8 @@ public class RobotBase extends DriveBase{
      */
 
     //TODO: change launch velocities for code to actually work
-    final double LAUNCHER_TARGET_VELOCITY = 1125; //flyWheel
-    final double LAUNCHER_MIN_VELOCITY = 1025; //starts feeder
+    final double LAUNCHER_TARGET_VELOCITY = 1525; //flyWheel
+    final double LAUNCHER_MIN_VELOCITY = 1125; //starts feeder
 
     ElapsedTime feederTimer = new ElapsedTime();
     ElapsedTime StopTimer = new ElapsedTime();
