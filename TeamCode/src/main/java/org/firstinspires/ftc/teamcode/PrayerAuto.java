@@ -335,6 +335,7 @@ public class PrayerAuto extends OpMode
                     flyWheelRight.setZeroPowerBehavior(BRAKE);
                     autonomousState = AutonomousState.LAUNCH;
                 }
+                break;
             /*
              * Since the first state of our auto is LAUNCH, this is the first "case" we encounter.
              * This case is very simple. We call our .launch() function with "true" in the parameter.
