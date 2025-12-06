@@ -153,4 +153,12 @@ public class RobotBase extends DriveBase{
         intake1_2.setPower(power);
 
     }
+    void increaseVelocity(){
+        LAUNCHER_MIN_VELOCITY += 20;
+        LAUNCHER_TARGET_VELOCITY += 20;
+    }
+    void decreaseVelocity(){
+        LAUNCHER_MIN_VELOCITY -= 20;
+        LAUNCHER_TARGET_VELOCITY -= 20;
+    }
 }
