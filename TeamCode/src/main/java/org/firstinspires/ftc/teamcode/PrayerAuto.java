@@ -337,10 +337,7 @@ public class PrayerAuto extends OpMode
                 rightFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 leftRearDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 rightRearDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                leftFrontDrive.setPower(0.5);
-                leftRearDrive.setPower(0.5);
-                rightFrontDrive.setPower(0.5);
-                rightRearDrive.setPower(0.5);
+                robot.drive(.5, 0, 0);
                 if (driveTimer.milliseconds() > 2000){
                     leftFrontDrive.setZeroPowerBehavior(BRAKE);
                     rightFrontDrive.setZeroPowerBehavior(BRAKE);
@@ -441,19 +438,14 @@ public class PrayerAuto extends OpMode
                 rightFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 leftRearDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 rightRearDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                leftFrontDrive.setPower(0.5);
-                leftRearDrive.setPower(-0.5);
-                rightFrontDrive.setPower(-0.5);
-                rightRearDrive.setPower(0.5);
+                if(alliance == Alliance.RED){
+                    robot.drive(0, .5, -.5);
+                }else if(alliance == Alliance.BLUE){
+                    robot.drive(0, .5, .5);
+                }
 
                 if (driveTimer.milliseconds() > 2500) {
-                    leftFrontDrive.setZeroPowerBehavior(BRAKE);
-                    rightFrontDrive.setZeroPowerBehavior(BRAKE);
-                    leftRearDrive.setZeroPowerBehavior(BRAKE);
-                    rightRearDrive.setZeroPowerBehavior(BRAKE);
-                    flyWheelLeft.setZeroPowerBehavior(BRAKE);
-                    flyWheelRight.setZeroPowerBehavior(BRAKE);
-
+                    robot.drive(0, 0 , 0);
                     autonomousState = AutonomousState.COMPLETE;
                 }
                 break;
@@ -606,5 +598,45 @@ public class PrayerAuto extends OpMode
 */
         return (driveTimer.seconds() > holdSeconds);
 
+    }
+    public void drive(double axial, double lateral, double yaw)
+    {
+        double max;
+
+        // This conversion is based on gmZero.org code
+        /*
+        if(fieldCentric)
+        {
+            double botHeading = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
+
+            double rotX = lateral * Math.cos(-botHeading) - axial * Math.sin(-botHeading);
+            axial = lateral * Math.sin(-botHeading) + axial * Math.cos(-botHeading);
+            axial = lateral * Math.sin(-botHeading) + axial * Math.cos(-botHeading);
+
+            lateral = rotX;
+        }*/
+
+        // Combine the joystick requests for each axis-motion to determine each wheel's power.
+        // Set up a variable for each drive wheel to save the power level for telemetry.
+        /* og
+        double denominator = Math.max(Math.abs(axial)+Math.abs(lateral)+Math.abs(yaw),1);
+        double leftFrontPower  = (axial + lateral + yaw)/denominator;
+        double leftRearPower   = (axial - lateral + yaw)/denominator;
+        double rightFrontPower = (axial - lateral - yaw)/denominator;
+        double rightRearPower  = (axial + lateral - yaw)/denominator;
+        */
+        double denominator = Math.max(Math.abs(axial)+Math.abs(lateral)+Math.abs(yaw),1);
+        double leftFrontPower  = (axial + lateral + yaw)/denominator;
+        double leftRearPower   = (axial - lateral + yaw)/denominator;
+        double rightFrontPower = (axial - lateral - yaw)/denominator;
+        double rightRearPower  = (axial + lateral - yaw)/denominator;
+
+        // Apply the power to the motors
+        leftFrontDrive.setPower(leftFrontPower);
+        leftRearDrive.setPower(leftRearPower);
+        rightFrontDrive.setPower(rightFrontPower);
+        rightRearDrive.setPower(rightRearPower);
+
+        // TODO: Add data to the telemetry for displaying the current motor powers
     }
 }
