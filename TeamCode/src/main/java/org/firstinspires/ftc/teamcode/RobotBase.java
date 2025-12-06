@@ -25,8 +25,8 @@ public class RobotBase extends DriveBase{
      */
 
     //TODO: change launch velocities for code to actually work
-    protected double LAUNCHER_TARGET_VELOCITY = 925; //flyWheel
-    protected double LAUNCHER_MIN_VELOCITY = 825; //starts feeder
+    protected double LAUNCHER_TARGET_VELOCITY = 1125; //flyWheel
+    protected double LAUNCHER_MIN_VELOCITY = 1025; //starts feeder
 
     ElapsedTime feederTimer = new ElapsedTime();
     ElapsedTime StopTimer = new ElapsedTime();
@@ -112,12 +112,12 @@ public class RobotBase extends DriveBase{
         return shotRequested;
     }
     boolean launch2(boolean shotRequested) { //type 0 for short, 1 for long
-        LAUNCHER_MIN_VELOCITY += 200;
-        LAUNCHER_TARGET_VELOCITY += 200;
         //TODO: play with multiplier number to make code actually work
         switch (launchState) {
             case IDLE:
                 if (shotRequested) {
+                    LAUNCHER_MIN_VELOCITY += 200;
+                    LAUNCHER_TARGET_VELOCITY += 200;
                     launchState = LaunchState.SPIN_UP;
                 }//if
                 else if (StopTimer.seconds() > LAUNCHDURATION_SECONDS) {
