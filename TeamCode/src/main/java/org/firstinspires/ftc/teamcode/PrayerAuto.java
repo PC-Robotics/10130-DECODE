@@ -65,15 +65,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 @Autonomous(name="ModdedStarterBotAuto")
 //@Disableda
 public class PrayerAuto extends OpMode
-
-
 {
-    PrayerAuto robot;
 
-    public PrayerAuto()
-    {
-        robot = new PrayerAuto(this, false);
-    }
 
 
 
@@ -135,8 +128,6 @@ public class PrayerAuto extends OpMode
 
     protected CRServo feeder = null;
 
-    public PrayerAuto(PrayerAuto prayerAuto, boolean b) {
-    }
 
     /*
      * TECH TIP: State Machines
@@ -337,12 +328,9 @@ public class PrayerAuto extends OpMode
                 rightFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 leftRearDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 rightRearDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                robot.drive(.5, 0, 0);
+                drive(.5, 0, 0);
                 if (driveTimer.milliseconds() > 2000){
-                    leftFrontDrive.setZeroPowerBehavior(BRAKE);
-                    rightFrontDrive.setZeroPowerBehavior(BRAKE);
-                    leftRearDrive.setZeroPowerBehavior(BRAKE);
-                    rightRearDrive.setZeroPowerBehavior(BRAKE);
+                    drive(0, 0, 0);
                     flyWheelLeft.setZeroPowerBehavior(BRAKE);
                     flyWheelRight.setZeroPowerBehavior(BRAKE);
                     autonomousState = AutonomousState.LAUNCH;
@@ -439,13 +427,13 @@ public class PrayerAuto extends OpMode
                 leftRearDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 rightRearDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 if(alliance == Alliance.RED){
-                    robot.drive(0, .5, -.5);
+                    drive(0, .5, -.5);
                 }else if(alliance == Alliance.BLUE){
-                    robot.drive(0, .5, .5);
+                    drive(0, .5, .5);
                 }
 
                 if (driveTimer.milliseconds() > 2500) {
-                    robot.drive(0, 0 , 0);
+                    drive(0, 0 , 0);
                     autonomousState = AutonomousState.COMPLETE;
                 }
                 break;
