@@ -121,19 +121,19 @@ public class PrayerAuto extends OpMode
      * "object," so even though they are all an instance of ElapsedTime(), they count independently
      * from each other.
      */
-    private ElapsedTime shotTimer = new ElapsedTime();
-    private ElapsedTime feederTimer = new ElapsedTime();
-    private ElapsedTime driveTimer = new ElapsedTime();
+    protected ElapsedTime shotTimer = new ElapsedTime();
+    protected ElapsedTime feederTimer = new ElapsedTime();
+    protected ElapsedTime driveTimer = new ElapsedTime();
 
     // Declare OpMode members.
-    private DcMotor leftFrontDrive = null;
-    private DcMotor rightFrontDrive = null;
-    private DcMotor leftRearDrive = null;
-    private DcMotor rightRearDrive = null;
-    private DcMotorEx flyWheelLeft = null;
-    private DcMotorEx flyWheelRight = null;
+    protected DcMotor leftFrontDrive = null;
+    protected DcMotor rightFrontDrive = null;
+    protected DcMotor leftRearDrive = null;
+    protected DcMotor rightRearDrive = null;
+    protected DcMotorEx flyWheelLeft = null;
+    protected DcMotorEx flyWheelRight = null;
 
-    private CRServo feeder = null;
+    protected CRServo feeder = null;
 
     public PrayerAuto(PrayerAuto prayerAuto, boolean b) {
     }
@@ -639,4 +639,6 @@ public class PrayerAuto extends OpMode
 
         // TODO: Add data to the telemetry for displaying the current motor powers
     }
+
+
 }
