@@ -109,6 +109,7 @@ public class RobotBase extends DriveBase{
         myOpMode.telemetry.addData("State", launchState);
         myOpMode.telemetry.addData("Left Flywheel", flyWheelLeft.getVelocity());
         myOpMode.telemetry.addData("Right Flywheel",flyWheelRight.getVelocity());
+        myOpMode.telemetry.addData("Launcher Velocity", LAUNCHER_TARGET_VELOCITY);
         return shotRequested;
     }
     boolean launch2(boolean shotRequested) { //type 0 for short, 1 for long
