@@ -324,10 +324,6 @@ public class PrayerAuto extends OpMode
         switch (autonomousState) {
 
             case MOVE_FORWARD:
-                leftFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                rightFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                leftRearDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                rightRearDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 drive(.5, 0, 0);
                 if (driveTimer.milliseconds() > 2000){
                     drive(0, 0, 0);
@@ -366,10 +362,6 @@ public class PrayerAuto extends OpMode
                     if (shotsToFire > 0) {
                         autonomousState = AutonomousState.LAUNCH;
                     } else {
-                        leftFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                        rightFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                        leftRearDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                        rightRearDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                         flyWheelLeft.setVelocity(0);
                         flyWheelRight.setVelocity(0);
 
