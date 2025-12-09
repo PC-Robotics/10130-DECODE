@@ -441,11 +441,19 @@ public class PrayerAuto extends OpMode
          */
         telemetry.addData("AutoState", autonomousState);
         telemetry.addData("LauncherState", launchState);
-        telemetry.addData("Motor Current Positions", "left (%d), right (%d)",
+        /*telemetry.addData("Motor Current Positions", "left (%d), right (%d)",
                 leftFrontDrive.getCurrentPosition(), leftRearDrive.getCurrentPosition(), rightFrontDrive.getCurrentPosition(), rightRearDrive.getCurrentPosition());
+        */telemetry.addData(
+                "Motor Current Positions",
+                "LF(%d), LR(%d), RF(%d), RR(%d)",
+                leftFrontDrive.getCurrentPosition(),
+                leftRearDrive.getCurrentPosition(),
+                rightFrontDrive.getCurrentPosition(),
+                rightRearDrive.getCurrentPosition());
         telemetry.addData("Motor Target Positions", "left (%d), right (%d)",
                 leftFrontDrive.getCurrentPosition(), leftRearDrive.getCurrentPosition(), rightFrontDrive.getCurrentPosition(), rightRearDrive.getCurrentPosition());
         telemetry.update();
+
     }
 
     @Override
