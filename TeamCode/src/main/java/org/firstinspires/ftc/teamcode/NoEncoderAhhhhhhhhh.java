@@ -35,6 +35,8 @@ package org.firstinspires.ftc.teamcode;
 import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -46,59 +48,16 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
-//Living on a Prayer
-/*
- * This file includes an autonomous file for the goBILDA® StarterBot for the
- * 2025-2026 FIRST® Tech Challenge season DECODE™. It leverages a differential/Skid-Steer
- * system for robot mobility, one high-speed motor driving two "launcher wheels," and two servos
- * which feed that launcher.
- *
- * This robot starts up against the goal and launches all three projectiles before driving away
- * off the starting line.
- *
- * This program leverages a "state machine" - an Enum which captures the state of the robot
- * at any time. As it moves through the autonomous period and completes different functions,
- * it will move forward in the enum. This allows us to run the autonomous period inside of our
- * main robot "loop," continuously checking for conditions that allow us to move to the next step.
- */
-
-@Autonomous(name="ModdedStarterBotAuto")
-//@Disableda
-public class PrayerAuto extends OpMode
+@Autonomous(name="ModdedModdedStarterBotAuto")
+//@Disabled
+public class NoEncoderAhhhhhhhhh extends OpMode
 {
 
-
-
-
     final double FEED_TIME = 0.20; //The feeder servos run this long when a shot is requested.
-
-    /*
-     * When we control our launcher motor, we are using encoders. These allow the control system
-     * to read the current speed of the motor and apply more or less power to keep it at a constant
-     * velocity. Here we are setting the target and minimum velocity that the launcher should run
-     * at. The minimum velocity is a threshold for determining when to fire.
-     */
     final double LAUNCHER_TARGET_VELOCITY = 1400;
     final double LAUNCHER_MIN_VELOCITY = 1075;
-
-    /*
-     * The number of seconds that we wait between each of our 3 shots from the launcher. This
-     * can be much shorter, but the longer break is reasonable since it maximizes the likelihood
-     * that each shot will score.
-     */
     final double TIME_BETWEEN_SHOTS = 2;
-
-    /*
-     * Here we capture a few variables used in driving the robot. DRIVE_SPEED and ROTATE_SPEED
-     * are from 0-1, with 1 being full speed. Encoder ticks per revolution is specific to the motor
-     * ratio that we use in the kit; if you're using a different motor, this value can be found on
-     * the product page for the motor you're using.
-     * Track width is the distance between the center of the drive wheels on either side of the
-     * robot. Track width is used to determine the amount of linear distance each wheel needs to
-     * travel to create a specified rotation of the robot.
-     */
     final double DRIVE_SPEED = 0.5;
-
     final double ROTATE_SPEED = 0.2;
     final double WHEEL_DIAMETER_MM = 96;
     final double ENCODER_TICKS_PER_REV = 537.7;
@@ -108,12 +67,6 @@ public class PrayerAuto extends OpMode
     int shotsToFire = 2; //The number of shots to fire in this auto.
 
     double robotRotationAngle = 45;
-
-    /*
-     * Here we create three timers which we use in different parts of our code. Each of these is an
-     * "object," so even though they are all an instance of ElapsedTime(), they count independently
-     * from each other.
-     */
     protected ElapsedTime shotTimer = new ElapsedTime();
     protected ElapsedTime feederTimer = new ElapsedTime();
     protected ElapsedTime driveTimer = new ElapsedTime();
@@ -128,38 +81,19 @@ public class PrayerAuto extends OpMode
 
     protected CRServo feeder = null;
 
-
-    /*
-     * TECH TIP: State Machines
-     * We use "state machines" in a few different ways in this auto. The first step of a state
-     * machine is creating an enum that captures the different "states" that our code can be in.
-     * The core advantage of a state machine is that it allows us to continue to loop through code,
-     * and only run the bits of code we need to at different times. This state machine is called the
-     * "LaunchState." It reflects the current condition of the shooter motor when we request a shot.
-     * It starts at IDLE. When a shot is requested from the user, it'll move into PREPARE then LAUNCH.
-     * We can use higher level code to cycle through these states, but this allows us to write
-     * functions and autonomous routines in a way that avoids loops within loops, and "waits."
-     */
     private enum LaunchState {
         IDLE,
         PREPARE,
         LAUNCH,
     }
 
-    /*
-     * Here we create the instance of LaunchState that we use in code. This creates a unique object
-     * which can store the current condition of the shooter. In other applications, you may have
-     * multiple copies of the same enum which have different names. Here we just have one.
-     */
     private LaunchState launchState;
 
     double leftFrontPower;
     double rightFrontPower;
     double leftRearPower;
     double rightRearPower;
-    /*
-     * Here is our auto state machine enum. This captures each action we'd like to do in auto.
-     */
+
     private enum AutonomousState {
 
         MOVE_FORWARD,
@@ -171,17 +105,11 @@ public class PrayerAuto extends OpMode
 
     private AutonomousState autonomousState;
 
-    /*
-     * Here we create an enum not to create a state machine, but to capture which alliance we are on.
-     */
     private enum Alliance {
         RED,
         BLUE;
     }
 
-    /*
-     * When we create the instance of our enum we can also assign a default state.
-     */
     private Alliance alliance = Alliance.RED;
 
     /*
@@ -189,20 +117,9 @@ public class PrayerAuto extends OpMode
      */
     @Override
     public void init() {
-        /*
-         * Here we set the first step of our autonomous state machine by setting autoStep = AutoStep.LAUNCH.
-         * Later in our code, we will progress through the state machine by moving to other enum members.
-         * We do the same for our launcher state machine, setting it to IDLE before we use it later.
-         */
         autonomousState = AutonomousState.MOVE_FORWARD;
         launchState = LaunchState.IDLE;
 
-
-        /*
-         * Initialize the hardware variables. Note that the strings used here as parameters
-         * to 'get' must correspond to the names assigned during the robot configuration
-         * step (using the FTC Robot Controller app on the driver's station).
-         */
         leftFrontDrive  = hardwareMap.get(DcMotor.class, "leftFront");
         rightFrontDrive = hardwareMap.get(DcMotor.class, "rightFront");
         leftRearDrive  = hardwareMap.get(DcMotor.class, "leftRear");
@@ -210,84 +127,36 @@ public class PrayerAuto extends OpMode
         flyWheelLeft = hardwareMap.get(DcMotorEx.class,"flyWheelLeft");
         flyWheelRight = hardwareMap.get(DcMotorEx.class,"flyWheelRight");
         feeder = hardwareMap.get(CRServo.class, "feeder");
-
-        /*
-         * To drive forward, most robots need the motor on one side to be reversed,
-         * because the axles point in opposite directions. Pushing the left stick forward
-         * MUST make the robot go forward. So, adjust these two lines based on your first test drive.
-         * Note: The settings here assume direct drive on left and right wheels. Gear
-         * Reduction or 90° drives may require direction flips
-         */
-
         leftFrontDrive.setDirection(DcMotor.Direction.REVERSE);
         rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
         leftRearDrive.setDirection(DcMotor.Direction.REVERSE);
         rightRearDrive.setDirection(DcMotor.Direction.FORWARD);
         flyWheelRight.setDirection(DcMotor.Direction.FORWARD);
         flyWheelLeft.setDirection(DcMotor.Direction.REVERSE);
-
-        /*
-         * Here we reset the encoders on our drive motors before we start moving.
-         */
-        leftFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        /*leftFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftRearDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightRearDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        /*
-         * Setting zeroPowerBehavior to BRAKE enables a "brake mode." This causes the motor to
-         * slow down much faster when it is coasting. This creates a much more controllable
-         * drivetrain, as the robot stops much quicker.
-         */
         leftFrontDrive.setZeroPowerBehavior(BRAKE);
         rightFrontDrive.setZeroPowerBehavior(BRAKE);
         leftRearDrive.setZeroPowerBehavior(BRAKE);
         rightRearDrive.setZeroPowerBehavior(BRAKE);
         flyWheelLeft.setZeroPowerBehavior(BRAKE);
         flyWheelRight.setZeroPowerBehavior(BRAKE);
-
-        /*
-         * Here we set our launcher to the RUN_USING_ENCODER runmode.
-         * If you notice that you have no control over the velocity of the motor, and it just jumps
-         * right to a number much higher than your set point, make sure that your encoders are plugged
-         * into the port right beside the motor itself.
-         */
         flyWheelLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         flyWheelRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        /*
-         * Here we set the aforementioned PID coefficients. You shouldn't have to do this for any
-         * other motors on this robot.
-         */
         flyWheelLeft.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER,new PIDFCoefficients(300,0,0,10));
         flyWheelRight.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER,new PIDFCoefficients(300,0,0,10));
+        */
 
-        /*
-         * Much like our drivetrain motors, we set the left feeder servo to reverse so that they
-         * both work to feed the ball into the robot.
-         */
         feeder.setDirection(DcMotorSimple.Direction.REVERSE);
-
-
-        // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
     }
 
-    /*
-     * This code runs REPEATEDLY after the driver hits INIT, but before they hit START.
-     */
     @Override
     public void init_loop() {
-        /*
-         * We also set the servo power to 0 here to make sure that the servo controller is booted
-         * up and ready to go.
-         */
         feeder.setPower(0);
-
-
-        /*
-         * Here we allow the driver to select which alliance we are on using the gamepad.
-         */
         if (gamepad1.b) {
             alliance = Alliance.RED;
         } else if (gamepad1.x) {
@@ -299,28 +168,12 @@ public class PrayerAuto extends OpMode
         telemetry.addData("Selected Alliance", alliance);
     }
 
-    /*
-     * This code runs ONCE when the driver hits START.
-     */
     @Override
     public void start() {
         driveTimer.reset();
     }
-
-    /*
-     * This code runs REPEATEDLY after the driver hits START but before they hit STOP.
-     */
     @Override
     public void loop() {
-        /*
-         * TECH TIP: Switch Statements
-         * switch statements are an excellent way to take advantage of an enum. They work very
-         * similarly to a series of "if" statements, but allow for cleaner and more readable code.
-         * We switch between each enum member and write the code that should run when our enum
-         * reflects that state. We end each case with "break" to skip out of checking the rest
-         * of the members of the enum for a match, since if we find the "break" line in one case,
-         * we know our enum isn't reflecting a different state.
-         */
         switch (autonomousState) {
 
             case MOVE_FORWARD:
@@ -332,31 +185,12 @@ public class PrayerAuto extends OpMode
                     autonomousState = AutonomousState.LAUNCH;
                 }
                 break;
-            /*
-             * Since the first state of our auto is LAUNCH, this is the first "case" we encounter.
-             * This case is very simple. We call our .launch() function with "true" in the parameter.
-             * This "true" value informs our launch function that we'd like to start the process of
-             * firing a shot. We will call this function with a "false" in the next case. This
-             * "false" condition means that we are continuing to call the function every loop,
-             * allowing it to cycle through and continue the process of launching the first ball.
-             */
             case LAUNCH:
                 launch(true);
                 autonomousState = AutonomousState.WAIT_FOR_LAUNCH;
                 break;
 
             case WAIT_FOR_LAUNCH:
-                /*
-                 * A technique we leverage frequently in this code are functions which return a
-                 * boolean. We are using this function in two ways. This function actually moves the
-                 * motors and servos in a way that launches the ball, but it also "talks back" to
-                 * our main loop by returning either "true" or "false". We've written it so that
-                 * after the shot we requested has been fired, the function will return "true" for
-                 * one cycle. Once the launch function returns "true", we proceed in the code, removing
-                 * one from the shotsToFire variable. If shots remain, we move back to the LAUNCH
-                 * state on our state machine. Otherwise, we reset the encoders on our drive motors
-                 * and move onto the next state.
-                 */
                 if (launch(false)) {
                     shotsToFire -= 1;
                     if (shotsToFire > 0) {
@@ -415,10 +249,10 @@ public class PrayerAuto extends OpMode
  */
 
             case STRAFE_RIGHT:
-                leftFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                /*leftFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 rightFrontDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 leftRearDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                rightRearDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                rightRearDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);*/
                 if(alliance == Alliance.RED){
                     drive(0, .5, -.5);
                 }else if(alliance == Alliance.BLUE){
