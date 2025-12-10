@@ -325,7 +325,8 @@ public class PrayerAuto extends OpMode
 
             case MOVE_FORWARD:
                 drive(.5, 0, 0);
-                if (driveTimer.milliseconds() > 2000){
+                // changed from 2000 to 20000 miliseconds to debug auto
+                if (driveTimer.milliseconds() > 20000){
                     drive(0, 0, 0);
                     flyWheelLeft.setZeroPowerBehavior(BRAKE);
                     flyWheelRight.setZeroPowerBehavior(BRAKE);
@@ -440,6 +441,7 @@ public class PrayerAuto extends OpMode
          * "copy-and-paste" that non-state machine autonomous routines fall into.
          */
         telemetry.addData("AutoState", autonomousState);
+        telemetry.addData("Drivetimer", driveTimer.seconds())
         telemetry.addData("LauncherState", launchState);
         /*telemetry.addData("Motor Current Positions", "left (%d), right (%d)",
                 leftFrontDrive.getCurrentPosition(), leftRearDrive.getCurrentPosition(), rightFrontDrive.getCurrentPosition(), rightRearDrive.getCurrentPosition());
