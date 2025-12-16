@@ -441,7 +441,7 @@ public class PrayerAuto extends OpMode
          * "copy-and-paste" that non-state machine autonomous routines fall into.
          */
         telemetry.addData("AutoState", autonomousState);
-        telemetry.addData("Drivetimer", driveTimer.seconds())
+        telemetry.addData("Drivetimer", driveTimer.seconds());
         telemetry.addData("LauncherState", launchState);
         /*telemetry.addData("Motor Current Positions", "left (%d), right (%d)",
                 leftFrontDrive.getCurrentPosition(), leftRearDrive.getCurrentPosition(), rightFrontDrive.getCurrentPosition(), rightRearDrive.getCurrentPosition());
