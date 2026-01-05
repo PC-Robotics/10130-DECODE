@@ -48,9 +48,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
-@Autonomous(name="ModdedModdedStarterBotAuto")
+@Autonomous(name="Idek bro")
 //@Disabled
-public class NoEncoderAhhhhhhhhh extends OpMode
+public class IAmBoredSoWhyTheRizzNotInsertQuestionMark extends OpMode
 {
 
     final double FEED_TIME = 0.20; //The feeder servos run this long when a shot is requested.
@@ -163,8 +163,8 @@ public class NoEncoderAhhhhhhhhh extends OpMode
             alliance = Alliance.BLUE;
         }
 
-        telemetry.addData("Press square???", "for BLUE");
-        telemetry.addData("Press nothing i think", "for RED");
+        telemetry.addData("Press X", "for BLUE");
+        telemetry.addData("Press B", "for RED");
         telemetry.addData("Selected Alliance", alliance);
     }
 
