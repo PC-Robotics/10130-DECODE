@@ -254,7 +254,7 @@ public class NoEncoderAhhhhhhhhh extends OpMode
                 leftRearDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 rightRearDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);*/
                 if(alliance == Alliance.RED){
-                    drive(0, .5, 0);
+                    drive(0, -.5, 0);
                 }else if(alliance == Alliance.BLUE){
                     drive(0, .5, 0);
                 }
