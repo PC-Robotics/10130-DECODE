@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+//package org.firstinspires.ftc.teamcode;
 
 import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE;
 
@@ -22,7 +22,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 //import org.firstinspires.ftc.teamcode.robot.Robot;
-public class ForfunniesPidlololol extends OpMode{
+/*public class ForfunniesPidlololol extends OpMode{
     @Override
     public void init() {
 
