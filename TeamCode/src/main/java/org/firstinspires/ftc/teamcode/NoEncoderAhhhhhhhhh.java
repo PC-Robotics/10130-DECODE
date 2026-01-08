@@ -178,7 +178,7 @@ public class NoEncoderAhhhhhhhhh extends OpMode
 
             case MOVE_FORWARD:
                 drive(.5, 0, 0);
-                if (driveTimer.milliseconds() > 1750){
+                if (driveTimer.milliseconds() > 1500){
                     drive(0, 0, 0);
                     flyWheelLeft.setZeroPowerBehavior(BRAKE);
                     flyWheelRight.setZeroPowerBehavior(BRAKE);
@@ -259,7 +259,7 @@ public class NoEncoderAhhhhhhhhh extends OpMode
                     drive(0, .5, .5);
                 }
 
-                if (driveTimer.milliseconds() > 1500) {
+                if (driveTimer.milliseconds() > 1000) {
                     drive(0, 0 , 0);
                     autonomousState = AutonomousState.COMPLETE;
                 }
