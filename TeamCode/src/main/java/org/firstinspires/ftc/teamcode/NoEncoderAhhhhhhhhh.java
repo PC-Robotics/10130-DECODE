@@ -53,7 +53,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 public class NoEncoderAhhhhhhhhh extends OpMode
 {
 
-    final double FEED_TIME = 0.20; //The feeder servos run this long when a shot is requested.
+    final double FEED_TIME = 1.20; //The feeder servos run this long when a shot is requested.
     final double LAUNCHER_TARGET_VELOCITY = 1400;
     final double LAUNCHER_MIN_VELOCITY = 1075;
     final double TIME_BETWEEN_SHOTS = 2;
@@ -178,7 +178,7 @@ public class NoEncoderAhhhhhhhhh extends OpMode
 
             case MOVE_FORWARD:
                 drive(.5, 0, 0);
-                if (driveTimer.milliseconds() > 2000){
+                if (driveTimer.milliseconds() > 1750){
                     drive(0, 0, 0);
                     flyWheelLeft.setZeroPowerBehavior(BRAKE);
                     flyWheelRight.setZeroPowerBehavior(BRAKE);
@@ -259,7 +259,7 @@ public class NoEncoderAhhhhhhhhh extends OpMode
                     drive(0, .5, .5);
                 }
 
-                if (driveTimer.milliseconds() > 2500) {
+                if (driveTimer.milliseconds() > 1500) {
                     drive(0, 0 , 0);
                     autonomousState = AutonomousState.COMPLETE;
                 }
