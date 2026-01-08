@@ -178,7 +178,7 @@ public class NoEncoderAhhhhhhhhh extends OpMode
 
             case MOVE_FORWARD:
                 drive(.5, 0, 0);
-                if (driveTimer.milliseconds() > 1250){
+                if (driveTimer.milliseconds() > 1000){
                     drive(0, 0, 0);
                     flyWheelLeft.setZeroPowerBehavior(BRAKE);
                     flyWheelRight.setZeroPowerBehavior(BRAKE);
@@ -254,12 +254,12 @@ public class NoEncoderAhhhhhhhhh extends OpMode
                 leftRearDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 rightRearDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);*/
                 if(alliance == Alliance.RED){
-                    drive(0, .5, -.5);
+                    drive(0, .5, 0);
                 }else if(alliance == Alliance.BLUE){
-                    drive(0, .5, .5);
+                    drive(0, .5, 0);
                 }
 
-                if (driveTimer.milliseconds() > 1000) {
+                if (driveTimer.milliseconds() > 500) {
                     drive(0, 0 , 0);
                     autonomousState = AutonomousState.COMPLETE;
                 }
