@@ -191,7 +191,7 @@ public class NoEncoderAhhhhhhhhh extends OpMode
                 break;
 
             case WAIT_FOR_LAUNCH:
-                if (launch(false)) {
+                if (launch(true)) {
                     shotsToFire -= 1;
                     if (shotsToFire > 0) {
                         autonomousState = AutonomousState.LAUNCH;
@@ -254,9 +254,9 @@ public class NoEncoderAhhhhhhhhh extends OpMode
                 leftRearDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 rightRearDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);*/
                 if(alliance == Alliance.RED){
-                    drive(0, -.5, 0);
-                }else if(alliance == Alliance.BLUE){
                     drive(0, .5, 0);
+                }else if(alliance == Alliance.BLUE){
+                    drive(0, -.5, 0);
                 }
 
                 if (driveTimer.milliseconds() > 750) {
@@ -275,6 +275,7 @@ public class NoEncoderAhhhhhhhhh extends OpMode
          */
         telemetry.addData("AutoState", autonomousState);
         telemetry.addData("LauncherState", launchState);
+        telemetry.addData("Shots to fire", shotsToFire);
         /*telemetry.addData("Motor Current Positions", "left (%d), right (%d)",
                 leftFrontDrive.getCurrentPosition(), leftRearDrive.getCurrentPosition(), rightFrontDrive.getCurrentPosition(), rightRearDrive.getCurrentPosition());
         */telemetry.addData(
