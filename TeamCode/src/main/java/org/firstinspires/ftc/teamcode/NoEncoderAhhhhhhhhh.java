@@ -259,7 +259,7 @@ public class NoEncoderAhhhhhhhhh extends OpMode
                     drive(0, .5, 0);
                 }
 
-                if (driveTimer.milliseconds() > 1500) {
+                if (driveTimer.milliseconds() > 750) {
                     drive(0, 0 , 0);
                     autonomousState = AutonomousState.COMPLETE;
                 }
