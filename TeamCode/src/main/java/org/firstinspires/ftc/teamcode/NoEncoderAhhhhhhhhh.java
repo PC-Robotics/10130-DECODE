@@ -177,7 +177,7 @@ public class NoEncoderAhhhhhhhhh extends OpMode
         switch (autonomousState) {
 
             case MOVE_FORWARD:
-                drive(.5, 0, 0);
+                drive(.4, 0, 0);
                 if (driveTimer.milliseconds() > 1000){
                     drive(0, 0, 0);
                     flyWheelLeft.setZeroPowerBehavior(BRAKE);
