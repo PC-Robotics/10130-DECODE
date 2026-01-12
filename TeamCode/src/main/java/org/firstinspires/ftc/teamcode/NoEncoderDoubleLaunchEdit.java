@@ -198,8 +198,9 @@ public class NoEncoderDoubleLaunchEdit extends OpMode
                     if (shotsToFire > 0) {
                         autonomousState = AutonomousState.LAUNCH;
                     } else {
-                        flyWheelLeft.setVelocity(0);
-                        flyWheelRight.setVelocity(0);
+                        //TODO: delte suspicious suggestion ?????????
+                        //flyWheelLeft.setVelocity(0);
+                        //flyWheelRight.setVelocity(0);
 
                         // reset timer before strafing
                         driveTimer.reset();
