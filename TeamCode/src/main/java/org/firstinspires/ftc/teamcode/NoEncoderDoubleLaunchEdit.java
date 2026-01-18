@@ -314,8 +314,11 @@ public class NoEncoderDoubleLaunchEdit extends OpMode
         leftRearDrive.setPower(leftRearPower);
         rightFrontDrive.setPower(rightFrontPower);
         rightRearDrive.setPower(rightRearPower);
+        telemetry.addData("Right Rear Motor Power", rightRearDrive.getPower());
+        telemetry.addData("Left Rear Motor Power", leftRearDrive.getPower());
+        telemetry.addData("Right Front Motor Power", rightFrontDrive.getPower());
+        telemetry.addData("Left Front Motor Power", leftFrontDrive.getPower());
 
-        // TODO: Add data to the telemetry for displaying the current motor powers
     }
 
 //
