@@ -130,7 +130,7 @@ public class DoubleLaunchFarAway extends OpMode
         switch (autonomousState) {
 
             case MOVE_FORWARD:
-                //insert a sleep here for compatability if needed
+                //insert a sleep here for compatability if needed, if done add amount to ur milliseconds timer or a reset after
                 drive(-.5, 0, 0);
                 double multi = 0;
                 if (driveTimer.milliseconds() > 1500){
