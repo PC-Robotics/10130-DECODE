@@ -10,9 +10,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
-@Autonomous(name="Probably the Final Auto ???????????????????")
+@Autonomous(name="Launch From like the side without bins")
 //@Disabled
-public class PickUpBallAuto extends OpMode
+public class DoubleLaunchFarAway extends OpMode
 {
 
     final double FEED_TIME = 1.20; //The feeder servos run this long when a shot is requested.
@@ -56,22 +56,6 @@ public class PickUpBallAuto extends OpMode
     double leftRearPower;
     double rightRearPower;
 
-
-    /*
-    move forward
-    launch first preload
-    wait first pre load
-    launch second preload
-    wait seoncd preload
-    turn to pick up two balls
-    move back into a launch position
-    launch firstpickup
-    wait first pick up
-    launch secondpickup
-    wait second pick up
-    strafe right to get off launch line
-    complete
-     */
     private enum AutonomousState {
 
         MOVE_FORWARD,
@@ -79,12 +63,6 @@ public class PickUpBallAuto extends OpMode
         WAIT_FOR_LAUNCH,
         SECOND_LAUNCH,
         LETS_WAIT_AGAIN,
-        MOVE_OVER,
-        MOVE_BACK,
-        LAUNCH_THIRD,
-        WAIT_THIRD,
-        LAUNCH_FOURTH,
-        WAIT_FOURTH,
         STRAFE_RIGHT,
         COMPLETE;
     }
@@ -130,6 +108,12 @@ public class PickUpBallAuto extends OpMode
             alliance = Alliance.RED;
         } else if (gamepad1.x) {
             alliance = Alliance.BLUE;
+
+        }
+        if (alliance == Alliance.RED) {
+            double p = -1;
+        } else if (alliance == Alliance.BLUE) {
+            double p = 1;
         }
 
         telemetry.addData("Press square???", "for BLUE");
@@ -141,21 +125,30 @@ public class PickUpBallAuto extends OpMode
     public void start() {
         driveTimer.reset();
     }
-
-    /*public void loop(){
-
-    }*/
     @Override
     public void loop() {
         switch (autonomousState) {
 
             case MOVE_FORWARD:
-                drive(.5, 0, 0);
+                //insert a sleep here for compatability if needed
+                drive(-.5, 0, 0);
+                double multi = 0;
                 if (driveTimer.milliseconds() > 1500){
-                    drive(0, 0, 0);
-                    flyWheelLeft.setZeroPowerBehavior(BRAKE);
-                    flyWheelRight.setZeroPowerBehavior(BRAKE);
-                    autonomousState = AutonomousState.LAUNCH;
+                    if (alliance == Alliance.RED) {
+                        multi = -.5;
+                    } else if (alliance == Alliance.BLUE) {
+                        multi = .5;
+                    }
+                    drive(0, multi, 0);
+                    if (driveTimer.milliseconds() > 2000){
+                        drive(.5, 0, 0);
+                        if(driveTimer.milliseconds() > 2500) {
+                            drive(0, 0, 0);
+                            flyWheelLeft.setZeroPowerBehavior(BRAKE);
+                            flyWheelRight.setZeroPowerBehavior(BRAKE);
+                            autonomousState = AutonomousState.LAUNCH;
+                        }
+                    }
                 }
                 break;
             case LAUNCH:
@@ -198,33 +191,11 @@ public class PickUpBallAuto extends OpMode
                         // reset timer before strafing
                         driveTimer.reset();
                         //go to strafe
-                        autonomousState = AutonomousState.MOVE_OVER;
+                        autonomousState = AutonomousState.STRAFE_RIGHT;
                     }
                 }
                 break;
 
-            case MOVE_OVER:
-                //
-                break;
-            case MOVE_BACK:
-                //
-                break;
-
-            case LAUNCH_THIRD:
-                //
-                break;
-
-            case WAIT_THIRD:
-                //
-                break;
-
-            case LAUNCH_FOURTH:
-                //
-                break;
-
-            case WAIT_FOURTH:
-                //
-                break;
             case STRAFE_RIGHT:
                 //maybe mess with ts
                 if(alliance == Alliance.RED){

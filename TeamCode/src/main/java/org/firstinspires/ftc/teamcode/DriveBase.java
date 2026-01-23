@@ -42,17 +42,6 @@ public class DriveBase
         leftRearDrive = myOpMode.hardwareMap.get(DcMotor.class, "leftRear");
         rightFrontDrive = myOpMode.hardwareMap.get(DcMotor.class,"rightFront");
         rightRearDrive = myOpMode.hardwareMap.get(DcMotor.class,"rightRear");
-
-        // ########################################################################################
-        // !!!            IMPORTANT Drive Information. Test your motor directions.            !!!!!
-        // ########################################################################################
-        // Most robots need the motors on one side to be reversed to drive forward.
-        // The motor reversals shown here are for a "direct drive" robot (the wheels turn the same direction as the motor shaft)
-        // If your robot has additional gear reductions or uses a right-angled drive, it's important to ensure
-        // that your motors are turning in the correct direction.  So, start out with the reversals here, BUT
-        // when you first test your robot, push the left joystick forward and observe the direction the wheels turn.
-        // Reverse the direction (flip FORWARD <-> REVERSE ) of any wheel that runs backward
-        // Keep testing until ALL the wheels move the robot forward when you push the left joystick forward.
         leftFrontDrive.setDirection(DcMotor.Direction.REVERSE);
         leftRearDrive.setDirection(DcMotor.Direction.REVERSE);
         rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
@@ -81,29 +70,6 @@ public class DriveBase
     public void drive(double axial, double lateral, double yaw)
     {
         double max;
-
-        // This conversion is based on gmZero.org code
-        /*
-        if(fieldCentric)
-        {
-            double botHeading = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
-
-            double rotX = lateral * Math.cos(-botHeading) - axial * Math.sin(-botHeading);
-            axial = lateral * Math.sin(-botHeading) + axial * Math.cos(-botHeading);
-            axial = lateral * Math.sin(-botHeading) + axial * Math.cos(-botHeading);
-
-            lateral = rotX;
-        }*/
-
-        // Combine the joystick requests for each axis-motion to determine each wheel's power.
-        // Set up a variable for each drive wheel to save the power level for telemetry.
-        /* og
-        double denominator = Math.max(Math.abs(axial)+Math.abs(lateral)+Math.abs(yaw),1);
-        double leftFrontPower  = (axial + lateral + yaw)/denominator;
-        double leftRearPower   = (axial - lateral + yaw)/denominator;
-        double rightFrontPower = (axial - lateral - yaw)/denominator;
-        double rightRearPower  = (axial + lateral - yaw)/denominator;
-        */
         double denominator = Math.max(Math.abs(axial)+Math.abs(lateral)+Math.abs(yaw),1);
         double leftFrontPower  = (axial + lateral + yaw)/denominator;
         double leftRearPower   = (axial - lateral + yaw)/denominator;
