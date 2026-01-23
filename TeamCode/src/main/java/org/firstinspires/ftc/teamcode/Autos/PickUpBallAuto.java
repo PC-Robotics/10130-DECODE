@@ -203,27 +203,60 @@ public class PickUpBallAuto extends OpMode
                 }
                 break;
 
-            case MOVE_OVER:
-                //
+            case MOVE_OVER: //might replace this and next case with Dennis's pedro or Carter/Kai's pid -- depends on my free time
+                //turn and move sideways
+                //pick up two balls (run intake/set power to the motors) -- might have to introduce an intake to the hardwar map
+                //power off motors
+                autonomousState = AutonomousState.MOVE_BACK;
                 break;
             case MOVE_BACK:
-                //
+                //move backward
+                //turn slightly
+                autonomousState = AutonomousState.LAUNCH_THIRD;
                 break;
 
             case LAUNCH_THIRD:
-                //
+                launch(true);
+                autonomousState = AutonomousState.WAIT_THIRD;
                 break;
 
             case WAIT_THIRD:
-                //
+                if (launch(true)) {
+                    shotsToFire -= 1;
+                    if (shotsToFire > 0) {
+                        autonomousState = AutonomousState.LAUNCH;
+                    } else {
+                        flyWheelLeft.setVelocity(0);
+                        flyWheelRight.setVelocity(0);
+
+                        // reset timer before strafing
+                        driveTimer.reset();
+                        //go to strafe
+                        autonomousState = AutonomousState.LAUNCH_FOURTH;
+                    }
+                }
                 break;
 
             case LAUNCH_FOURTH:
-                //
+                launch(true);
+                autonomousState = AutonomousState.WAIT_FOURTH;
                 break;
 
             case WAIT_FOURTH:
-                //
+                if (launch(true)) {
+                    shotsToFire -= 1;
+                    if (shotsToFire > 0) {
+                        autonomousState = AutonomousState.LAUNCH;
+                    } else {
+                        flyWheelLeft.setVelocity(0);
+                        flyWheelRight.setVelocity(0);
+
+                        // reset timer before strafing
+                        driveTimer.reset();
+                        //go to strafe
+                        autonomousState = AutonomousState.STRAFE_RIGHT;
+                    }
+                }
                 break;
             case STRAFE_RIGHT:
                 //maybe mess with ts
