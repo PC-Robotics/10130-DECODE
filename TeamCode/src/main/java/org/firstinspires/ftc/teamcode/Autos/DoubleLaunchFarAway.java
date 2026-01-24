@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 //shoot from launch line then move fwd
-@Autonomous(name="Launch From like the side without bins")
+@Autonomous(name="Final opposite bins auto")
 //@Disabled
 public class DoubleLaunchFarAway extends OpMode
 {

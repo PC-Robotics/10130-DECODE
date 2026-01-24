@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
-@Autonomous(name="Final Auto ???????????????????")
+@Autonomous(name="Final Bins Auto")
 //@Disabled
 public class NoEncoderDoubleLaunchEdit extends OpMode
 {
