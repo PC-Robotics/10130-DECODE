@@ -135,7 +135,7 @@ public class DoubleLaunchFarAway extends OpMode
             case MOVE_FORWARD:
                 drive(-.5, 0, 0);
                 //1500
-                if (driveTimer.milliseconds() > 2600){
+                if (driveTimer.milliseconds() > 2700){
                     drive(0, 0, 0);
                     flyWheelLeft.setZeroPowerBehavior(BRAKE);
                     flyWheelRight.setZeroPowerBehavior(BRAKE);
@@ -149,7 +149,7 @@ public class DoubleLaunchFarAway extends OpMode
                     drive(0, 0, 0);
                     flyWheelLeft.setZeroPowerBehavior(BRAKE);
                     flyWheelRight.setZeroPowerBehavior(BRAKE);
-                    autonomousState = DoubleLaunchFarAway.AutonomousState.TURN;
+                    autonomousState = DoubleLaunchFarAway.AutonomousState.LAUNCH;
                 }
                 break;
             case LAUNCH:
