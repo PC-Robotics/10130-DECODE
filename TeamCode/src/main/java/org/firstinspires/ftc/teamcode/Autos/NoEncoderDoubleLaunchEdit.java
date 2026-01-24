@@ -16,8 +16,8 @@ public class NoEncoderDoubleLaunchEdit extends OpMode
 {
 
     final double FEED_TIME = 1.20; //The feeder servos run this long when a shot is requested.
-    final double LAUNCHER_TARGET_VELOCITY = 1000;
-    final double LAUNCHER_MIN_VELOCITY = 800;
+    double LAUNCHER_TARGET_VELOCITY = 1000;
+    double LAUNCHER_MIN_VELOCITY = 800;
     final double TIME_BETWEEN_SHOTS = 2;
     final double DRIVE_SPEED = 0.5;
     final double ROTATE_SPEED = 0.2;
@@ -135,6 +135,8 @@ public class NoEncoderDoubleLaunchEdit extends OpMode
                 }
                 break;
             case LAUNCH:
+                LAUNCHER_TARGET_VELOCITY = 800;
+                LAUNCHER_MIN_VELOCITY = 600;
                 launch(true);
                 autonomousState = AutonomousState.WAIT_FOR_LAUNCH;
                 break;
@@ -158,6 +160,8 @@ public class NoEncoderDoubleLaunchEdit extends OpMode
                 break;
                 //TODO: make sure ts actually freaking functions *shrug*
             case SECOND_LAUNCH:
+                LAUNCHER_TARGET_VELOCITY = 1000;
+                LAUNCHER_MIN_VELOCITY = 800;
                 driveTimer.reset();
                 launch(true);
                 runIntake(-.5);
