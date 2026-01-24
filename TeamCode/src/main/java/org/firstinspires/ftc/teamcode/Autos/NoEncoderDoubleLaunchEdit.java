@@ -16,8 +16,8 @@ public class NoEncoderDoubleLaunchEdit extends OpMode
 {
 
     final double FEED_TIME = 1.20; //The feeder servos run this long when a shot is requested.
-    final double LAUNCHER_TARGET_VELOCITY = 1200;
-    final double LAUNCHER_MIN_VELOCITY = 900;
+    final double LAUNCHER_TARGET_VELOCITY = 1000;
+    final double LAUNCHER_MIN_VELOCITY = 800;
     final double TIME_BETWEEN_SHOTS = 2;
     final double DRIVE_SPEED = 0.5;
     final double ROTATE_SPEED = 0.2;
@@ -160,7 +160,7 @@ public class NoEncoderDoubleLaunchEdit extends OpMode
             case SECOND_LAUNCH:
                 driveTimer.reset();
                 launch(true);
-                runIntake(.5);
+                runIntake(-.5);
                 if(driveTimer.milliseconds() > 500){
                     runIntake(0);
                 }
