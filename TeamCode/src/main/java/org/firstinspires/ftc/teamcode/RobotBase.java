@@ -25,6 +25,7 @@ public class RobotBase extends DriveBase{
      */
 
     //TODO: change launch velocities for code to actually work
+    //might change 1045, and like 900 ish (check prev commit) if we went far shot
     protected double LAUNCHER_TARGET_VELOCITY = 1000; //flyWheel
     protected double LAUNCHER_MIN_VELOCITY = 800; //starts feeder
 
