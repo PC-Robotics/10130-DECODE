@@ -204,9 +204,21 @@ public class PickUpBallAuto extends OpMode
                 break;
 
             case MOVE_OVER: //might replace this and next case with Dennis's pedro or Carter/Kai's pid -- depends on my free time
+                driveTimer.reset();
                 //turn and move sideways
                 //pick up two balls (run intake/set power to the motors) -- might have to introduce an intake to the hardwar map
                 //power off motors
+                drive(.5, 0, 0);
+                if (driveTimer.milliseconds() > 1500){
+                    drive(0, 0, .5);
+                }
+                if(driveTimer.milliseconds() > 1750){
+                    drive(.5, 0, 0);
+                }
+                if(driveTimer.milliseconds() > 2000){
+                    drive(.5, 0, 0);
+                }
+                driveTimer.reset();
                 autonomousState = AutonomousState.MOVE_BACK;
                 break;
             case MOVE_BACK:
