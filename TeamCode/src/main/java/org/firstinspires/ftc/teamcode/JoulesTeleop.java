@@ -3,7 +3,7 @@
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-@TeleOp(name="Starting Teleop")
+@TeleOp(name="Starting Teleop",group="Robot")
 public class JoulesTeleop extends LinearOpMode {
 
     RobotBase robot;

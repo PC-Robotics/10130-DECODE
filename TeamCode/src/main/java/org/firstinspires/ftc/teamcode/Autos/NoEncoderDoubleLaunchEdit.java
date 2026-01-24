@@ -57,7 +57,7 @@ public class NoEncoderDoubleLaunchEdit extends OpMode
     double leftRearPower;
     double rightRearPower;
 
-    private enum AutonomousState {
+    enum AutonomousState {
 
         MOVE_FORWARD,
         LAUNCH,
@@ -127,7 +127,8 @@ public class NoEncoderDoubleLaunchEdit extends OpMode
 
             case MOVE_FORWARD:
                 drive(.5, 0, 0);
-                if (driveTimer.milliseconds() > 1500){
+                //1500
+                if (driveTimer.milliseconds() > 1350){
                     drive(0, 0, 0);
                     flyWheelLeft.setZeroPowerBehavior(BRAKE);
                     flyWheelRight.setZeroPowerBehavior(BRAKE);
@@ -135,7 +136,7 @@ public class NoEncoderDoubleLaunchEdit extends OpMode
                 }
                 break;
             case LAUNCH:
-                LAUNCHER_TARGET_VELOCITY = 800;
+                LAUNCHER_TARGET_VELOCITY = 750;
                 LAUNCHER_MIN_VELOCITY = 600;
                 launch(true);
                 autonomousState = AutonomousState.WAIT_FOR_LAUNCH;
@@ -158,14 +159,18 @@ public class NoEncoderDoubleLaunchEdit extends OpMode
                     }
                 }
                 break;
+                //
                 //TODO: make sure ts actually freaking functions *shrug*
             case SECOND_LAUNCH:
-                LAUNCHER_TARGET_VELOCITY = 1000;
+                LAUNCHER_TARGET_VELOCITY = 900;
                 LAUNCHER_MIN_VELOCITY = 800;
                 driveTimer.reset();
+                if(driveTimer.milliseconds() > 250){
+                    feeder.setPower(.5);
+                }
                 launch(true);
                 runIntake(-.5);
-                if(driveTimer.milliseconds() > 500){
+                if(driveTimer.milliseconds() > 750){
                     runIntake(0);
                 }
                 autonomousState = AutonomousState.LETS_WAIT_AGAIN;
@@ -190,16 +195,19 @@ public class NoEncoderDoubleLaunchEdit extends OpMode
 
             case STRAFE_RIGHT:
                 //maybe mess with ts
-                if(alliance == Alliance.RED){
+                /*if(alliance == Alliance.RED){
                     drive(0, .5, 0);
                 }else if(alliance == Alliance.BLUE){
                     drive(0, -.5, 0);
                 }
-
-                if (driveTimer.milliseconds() > 1000) {
+                if (driveTimer.milliseconds() > 750) {
                     drive(0, 0 , 0);
                     autonomousState = AutonomousState.COMPLETE;
                 }
+                drive(.5, 0, 0);
+                if(driveTimer.milliseconds() > 800){
+                    drive(0, 0, 0);
+                }*/
                 break;
         }
 
@@ -332,7 +340,6 @@ public class NoEncoderDoubleLaunchEdit extends OpMode
     void runIntake(double power)
     {
         intake1_2.setPower(power);
-
     }
 
 //
