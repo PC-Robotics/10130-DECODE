@@ -9,16 +9,17 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-
+//shoot from launch line then move fwd
 @Autonomous(name="Launch From like the side without bins")
 //@Disabled
 public class DoubleLaunchFarAway extends OpMode
 {
 
     final double FEED_TIME = 1.20; //The feeder servos run this long when a shot is requested.
-    final double LAUNCHER_TARGET_VELOCITY = 1400;
-    final double LAUNCHER_MIN_VELOCITY = 1075;
+    double LAUNCHER_TARGET_VELOCITY = 1400;
+    double LAUNCHER_MIN_VELOCITY = 1075;
     final double TIME_BETWEEN_SHOTS = 2;
+    protected DcMotor intake1_2 = null;
     final double DRIVE_SPEED = 0.5;
     final double ROTATE_SPEED = 0.2;
     final double WHEEL_DIAMETER_MM = 96;
@@ -59,6 +60,7 @@ public class DoubleLaunchFarAway extends OpMode
     private enum AutonomousState {
 
         MOVE_FORWARD,
+        TURN,
         LAUNCH,
         WAIT_FOR_LAUNCH,
         SECOND_LAUNCH,
@@ -90,6 +92,7 @@ public class DoubleLaunchFarAway extends OpMode
         rightRearDrive = hardwareMap.get(DcMotor.class, "rightRear");
         flyWheelLeft = hardwareMap.get(DcMotorEx.class,"flyWheelLeft");
         flyWheelRight = hardwareMap.get(DcMotorEx.class,"flyWheelRight");
+        intake1_2 = hardwareMap.get(DcMotor.class,"intake1_2");
         feeder = hardwareMap.get(CRServo.class, "feeder");
         leftFrontDrive.setDirection(DcMotor.Direction.REVERSE);
         rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
@@ -130,37 +133,37 @@ public class DoubleLaunchFarAway extends OpMode
         switch (autonomousState) {
 
             case MOVE_FORWARD:
-                //insert a sleep here for compatability if needed, if done add amount to ur milliseconds timer or a reset after
                 drive(-.5, 0, 0);
-                double multi = 0;
-                if (driveTimer.milliseconds() > 1500){
-                    if (alliance == Alliance.RED) {
-                        multi = -.5;
-                    } else if (alliance == Alliance.BLUE) {
-                        multi = .5;
-                    }
-                    drive(0, multi, 0);
-                    if (driveTimer.milliseconds() > 2000){
-                        drive(.5, 0, 0);
-                        if(driveTimer.milliseconds() > 2500) {
-                            drive(0, 0, 0);
-                            flyWheelLeft.setZeroPowerBehavior(BRAKE);
-                            flyWheelRight.setZeroPowerBehavior(BRAKE);
-                            autonomousState = AutonomousState.LAUNCH;
-                        }
-                    }
+                //1500
+                if (driveTimer.milliseconds() > 2600){
+                    drive(0, 0, 0);
+                    flyWheelLeft.setZeroPowerBehavior(BRAKE);
+                    flyWheelRight.setZeroPowerBehavior(BRAKE);
+                    autonomousState = DoubleLaunchFarAway.AutonomousState.TURN;
+                }
+                break;
+            case TURN:
+                driveTimer.reset();
+                drive(0, 0, .5);
+                if (driveTimer.milliseconds() > 100){
+                    drive(0, 0, 0);
+                    flyWheelLeft.setZeroPowerBehavior(BRAKE);
+                    flyWheelRight.setZeroPowerBehavior(BRAKE);
+                    autonomousState = DoubleLaunchFarAway.AutonomousState.TURN;
                 }
                 break;
             case LAUNCH:
+                LAUNCHER_TARGET_VELOCITY = 750;
+                LAUNCHER_MIN_VELOCITY = 600;
                 launch(true);
-                autonomousState = AutonomousState.WAIT_FOR_LAUNCH;
+                autonomousState = DoubleLaunchFarAway.AutonomousState.WAIT_FOR_LAUNCH;
                 break;
 
             case WAIT_FOR_LAUNCH:
                 if (launch(true)) {
                     shotsToFire -= 1;
                     if (shotsToFire > 0) {
-                        autonomousState = AutonomousState.LAUNCH;
+                        autonomousState = DoubleLaunchFarAway.AutonomousState.LAUNCH;
                     } else {
                         //TODO: delte suspicious suggestion ?????????
                         //flyWheelLeft.setVelocity(0);
@@ -169,21 +172,32 @@ public class DoubleLaunchFarAway extends OpMode
                         // reset timer before strafing
                         driveTimer.reset();
                         //go to strafe
-                        autonomousState = AutonomousState.SECOND_LAUNCH;
+                        autonomousState = DoubleLaunchFarAway.AutonomousState.SECOND_LAUNCH;
                     }
                 }
                 break;
+            //
             //TODO: make sure ts actually freaking functions *shrug*
             case SECOND_LAUNCH:
+                LAUNCHER_TARGET_VELOCITY = 900;
+                LAUNCHER_MIN_VELOCITY = 800;
+                driveTimer.reset();
+                if(driveTimer.milliseconds() > 250){
+                    feeder.setPower(.5);
+                }
                 launch(true);
-                autonomousState = AutonomousState.LETS_WAIT_AGAIN;
+                runIntake(-.5);
+                if(driveTimer.milliseconds() > 750){
+                    runIntake(0);
+                }
+                autonomousState = DoubleLaunchFarAway.AutonomousState.LETS_WAIT_AGAIN;
                 break;
 
             case LETS_WAIT_AGAIN:
                 if (launch(true)) {
                     shotsToFire -= 1;
                     if (shotsToFire > 0) {
-                        autonomousState = AutonomousState.LAUNCH;
+                        autonomousState = DoubleLaunchFarAway.AutonomousState.LAUNCH;
                     } else {
                         flyWheelLeft.setVelocity(0);
                         flyWheelRight.setVelocity(0);
@@ -191,23 +205,26 @@ public class DoubleLaunchFarAway extends OpMode
                         // reset timer before strafing
                         driveTimer.reset();
                         //go to strafe
-                        autonomousState = AutonomousState.STRAFE_RIGHT;
+                        autonomousState = DoubleLaunchFarAway.AutonomousState.STRAFE_RIGHT;
                     }
                 }
                 break;
 
             case STRAFE_RIGHT:
                 //maybe mess with ts
-                if(alliance == Alliance.RED){
+                /*if(alliance == Alliance.RED){
                     drive(0, .5, 0);
                 }else if(alliance == Alliance.BLUE){
                     drive(0, -.5, 0);
                 }
-
                 if (driveTimer.milliseconds() > 750) {
                     drive(0, 0 , 0);
                     autonomousState = AutonomousState.COMPLETE;
                 }
+                drive(.5, 0, 0);
+                if(driveTimer.milliseconds() > 800){
+                    drive(0, 0, 0);
+                }*/
                 break;
         }
 
@@ -335,6 +352,10 @@ public class DoubleLaunchFarAway extends OpMode
         telemetry.addData("Right Front Motor Power", rightFrontDrive.getPower());
         telemetry.addData("Left Front Motor Power", leftFrontDrive.getPower());
 
+    }
+    void runIntake(double power)
+    {
+        intake1_2.setPower(power);
     }
 
 //
