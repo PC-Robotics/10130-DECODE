@@ -71,7 +71,7 @@ public class RobotBase extends DriveBase{
     private LaunchState launchState = LaunchState.IDLE;
 
 
-    boolean launch(boolean shotRequested) { //type 0 for short, 1 for long
+    public boolean launch(boolean shotRequested) { //type 0 for short, 1 for long
         //TODO: play with multiplier number to make code actually work
         switch (launchState) {
             case IDLE:
