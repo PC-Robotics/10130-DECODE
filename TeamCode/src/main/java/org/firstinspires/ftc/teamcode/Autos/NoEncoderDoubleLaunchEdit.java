@@ -16,8 +16,8 @@ public class NoEncoderDoubleLaunchEdit extends OpMode
 {
 
     final double FEED_TIME = 1.20; //The feeder servos run this long when a shot is requested.
-    final double LAUNCHER_TARGET_VELOCITY = 1400;
-    final double LAUNCHER_MIN_VELOCITY = 1075;
+    final double LAUNCHER_TARGET_VELOCITY = 1200;
+    final double LAUNCHER_MIN_VELOCITY = 900;
     final double TIME_BETWEEN_SHOTS = 2;
     final double DRIVE_SPEED = 0.5;
     final double ROTATE_SPEED = 0.2;
@@ -25,6 +25,7 @@ public class NoEncoderDoubleLaunchEdit extends OpMode
     final double ENCODER_TICKS_PER_REV = 537.7;
     final double TICKS_PER_MM = (ENCODER_TICKS_PER_REV / (WHEEL_DIAMETER_MM * Math.PI));
     final double TRACK_WIDTH_MM = 404;
+    protected DcMotor intake1_2 = null;
 
     int shotsToFire = 2; //The number of shots to fire in this auto.
 
@@ -90,6 +91,7 @@ public class NoEncoderDoubleLaunchEdit extends OpMode
         rightRearDrive = hardwareMap.get(DcMotor.class, "rightRear");
         flyWheelLeft = hardwareMap.get(DcMotorEx.class,"flyWheelLeft");
         flyWheelRight = hardwareMap.get(DcMotorEx.class,"flyWheelRight");
+        intake1_2 = hardwareMap.get(DcMotor.class,"intake1_2");
         feeder = hardwareMap.get(CRServo.class, "feeder");
         leftFrontDrive.setDirection(DcMotor.Direction.REVERSE);
         rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
@@ -156,7 +158,12 @@ public class NoEncoderDoubleLaunchEdit extends OpMode
                 break;
                 //TODO: make sure ts actually freaking functions *shrug*
             case SECOND_LAUNCH:
+                driveTimer.reset();
                 launch(true);
+                runIntake(.5);
+                if(driveTimer.milliseconds() > 500){
+                    runIntake(0);
+                }
                 autonomousState = AutonomousState.LETS_WAIT_AGAIN;
                 break;
 
@@ -185,7 +192,7 @@ public class NoEncoderDoubleLaunchEdit extends OpMode
                     drive(0, -.5, 0);
                 }
 
-                if (driveTimer.milliseconds() > 750) {
+                if (driveTimer.milliseconds() > 1000) {
                     drive(0, 0 , 0);
                     autonomousState = AutonomousState.COMPLETE;
                 }
@@ -315,6 +322,12 @@ public class NoEncoderDoubleLaunchEdit extends OpMode
         telemetry.addData("Left Rear Motor Power", leftRearDrive.getPower());
         telemetry.addData("Right Front Motor Power", rightFrontDrive.getPower());
         telemetry.addData("Left Front Motor Power", leftFrontDrive.getPower());
+
+    }
+
+    void runIntake(double power)
+    {
+        intake1_2.setPower(power);
 
     }
 
