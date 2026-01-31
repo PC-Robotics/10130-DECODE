@@ -341,3 +341,4 @@ public class NoEncoderDoubleLaunchEdit extends OpMode
 
 //
 }
+//
