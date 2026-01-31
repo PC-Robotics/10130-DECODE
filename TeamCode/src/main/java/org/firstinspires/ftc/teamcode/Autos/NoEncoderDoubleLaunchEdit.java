@@ -15,9 +15,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 public class NoEncoderDoubleLaunchEdit extends OpMode
 {
 
-    final double FEED_TIME = 1.20; //The feeder servos run this long when a shot is requested.
-    double LAUNCHER_TARGET_VELOCITY = 1000;
-    double LAUNCHER_MIN_VELOCITY = 800;
+    final double FEED_TIME = 1.50; //The feeder servos run this long when a shot is requested.
+    double LAUNCHER_TARGET_VELOCITY = 550;
+    double LAUNCHER_MIN_VELOCITY = 425 ;
     final double TIME_BETWEEN_SHOTS = 2;
     final double DRIVE_SPEED = 0.5;
     final double ROTATE_SPEED = 0.2;
@@ -136,8 +136,6 @@ public class NoEncoderDoubleLaunchEdit extends OpMode
                 }
                 break;
             case LAUNCH:
-                LAUNCHER_TARGET_VELOCITY = 750;
-                LAUNCHER_MIN_VELOCITY = 600;
                 launch(true);
                 autonomousState = AutonomousState.WAIT_FOR_LAUNCH;
                 break;
@@ -148,7 +146,7 @@ public class NoEncoderDoubleLaunchEdit extends OpMode
                     if (shotsToFire > 0) {
                         autonomousState = AutonomousState.LAUNCH;
                     } else {
-                        //TODO: delte suspicious suggestion ?????????
+                        //TODO: delete suspicious suggestion ?????????
                         //flyWheelLeft.setVelocity(0);
                         //flyWheelRight.setVelocity(0);
 
@@ -162,12 +160,10 @@ public class NoEncoderDoubleLaunchEdit extends OpMode
                 //
                 //TODO: make sure ts actually freaking functions *shrug*
             case SECOND_LAUNCH:
-                LAUNCHER_TARGET_VELOCITY = 900;
+                LAUNCHER_TARGET_VELOCITY = 1000;
                 LAUNCHER_MIN_VELOCITY = 800;
                 driveTimer.reset();
-                if(driveTimer.milliseconds() > 250){
-                    feeder.setPower(.5);
-                }
+                feeder.setPower(.5);
                 launch(true);
                 runIntake(-.5);
                 if(driveTimer.milliseconds() > 750){
@@ -208,6 +204,7 @@ public class NoEncoderDoubleLaunchEdit extends OpMode
                 if(driveTimer.milliseconds() > 800){
                     drive(0, 0, 0);
                 }*/
+                autonomousState = AutonomousState.COMPLETE;
                 break;
         }
 
@@ -250,7 +247,7 @@ public class NoEncoderDoubleLaunchEdit extends OpMode
                 break;
             case LAUNCH:
                 if (feederTimer.seconds() > FEED_TIME) {
-                    feeder.setPower(0);
+                    feeder.setPower(.5);
 
                     if(shotTimer.seconds() > TIME_BETWEEN_SHOTS){
                         launchState = LaunchState.IDLE;

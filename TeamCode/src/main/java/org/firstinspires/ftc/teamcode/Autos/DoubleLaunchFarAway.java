@@ -12,12 +12,13 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 //shoot from launch line then move fwd
 @Autonomous(name="Final opposite bins auto")
 //@Disabled
+//2260 launched first ---- 2600
 public class DoubleLaunchFarAway extends OpMode
 {
 
     final double FEED_TIME = 1.20; //The feeder servos run this long when a shot is requested.
-    double LAUNCHER_TARGET_VELOCITY = 1400;
-    double LAUNCHER_MIN_VELOCITY = 1075;
+    double LAUNCHER_TARGET_VELOCITY = 1360;
+    double LAUNCHER_MIN_VELOCITY = 1100;
     final double TIME_BETWEEN_SHOTS = 2;
     protected DcMotor intake1_2 = null;
     final double DRIVE_SPEED = 0.5;
@@ -133,28 +134,17 @@ public class DoubleLaunchFarAway extends OpMode
         switch (autonomousState) {
 
             case MOVE_FORWARD:
-                drive(-.5, 0, 0);
+                /*drive(.5, 0, 0);
                 //1500
-                if (driveTimer.milliseconds() > 2700){
-                    drive(0, 0, 0);
-                    flyWheelLeft.setZeroPowerBehavior(BRAKE);
-                    flyWheelRight.setZeroPowerBehavior(BRAKE);
-                    autonomousState = DoubleLaunchFarAway.AutonomousState.TURN;
-                }
-                break;
-            case TURN:
-                driveTimer.reset();
-                drive(0, 0, .5);
-                if (driveTimer.milliseconds() > 100){
+                if (driveTimer.milliseconds() > 1350){
                     drive(0, 0, 0);
                     flyWheelLeft.setZeroPowerBehavior(BRAKE);
                     flyWheelRight.setZeroPowerBehavior(BRAKE);
                     autonomousState = DoubleLaunchFarAway.AutonomousState.LAUNCH;
-                }
+                }*/
+                autonomousState = DoubleLaunchFarAway.AutonomousState.LAUNCH;
                 break;
             case LAUNCH:
-                LAUNCHER_TARGET_VELOCITY = 750;
-                LAUNCHER_MIN_VELOCITY = 600;
                 launch(true);
                 autonomousState = DoubleLaunchFarAway.AutonomousState.WAIT_FOR_LAUNCH;
                 break;
@@ -165,7 +155,7 @@ public class DoubleLaunchFarAway extends OpMode
                     if (shotsToFire > 0) {
                         autonomousState = DoubleLaunchFarAway.AutonomousState.LAUNCH;
                     } else {
-                        //TODO: delte suspicious suggestion ?????????
+                        //TODO: delete suspicious suggestion ?????????
                         //flyWheelLeft.setVelocity(0);
                         //flyWheelRight.setVelocity(0);
 
@@ -179,12 +169,10 @@ public class DoubleLaunchFarAway extends OpMode
             //
             //TODO: make sure ts actually freaking functions *shrug*
             case SECOND_LAUNCH:
-                LAUNCHER_TARGET_VELOCITY = 900;
-                LAUNCHER_MIN_VELOCITY = 800;
+                LAUNCHER_TARGET_VELOCITY = 1400;
+                LAUNCHER_MIN_VELOCITY = 1200;
                 driveTimer.reset();
-                if(driveTimer.milliseconds() > 250){
-                    feeder.setPower(.5);
-                }
+                feeder.setPower(.5);
                 launch(true);
                 runIntake(-.5);
                 if(driveTimer.milliseconds() > 750){
@@ -212,19 +200,12 @@ public class DoubleLaunchFarAway extends OpMode
 
             case STRAFE_RIGHT:
                 //maybe mess with ts
-                /*if(alliance == Alliance.RED){
-                    drive(0, .5, 0);
-                }else if(alliance == Alliance.BLUE){
-                    drive(0, -.5, 0);
-                }
+                driveTimer.reset();
+                drive(.5,0,0);
                 if (driveTimer.milliseconds() > 750) {
                     drive(0, 0 , 0);
                     autonomousState = AutonomousState.COMPLETE;
                 }
-                drive(.5, 0, 0);
-                if(driveTimer.milliseconds() > 800){
-                    drive(0, 0, 0);
-                }*/
                 break;
         }
 

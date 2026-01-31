@@ -26,8 +26,8 @@ public class RobotBase extends DriveBase{
 
     //TODO: change launch velocities for code to actually work
     //might change 1045, and like 900 ish (check prev commit) if we went far shot
-    protected double LAUNCHER_TARGET_VELOCITY = 1000; //flyWheel
-    protected double LAUNCHER_MIN_VELOCITY = 800; //starts feeder
+    protected double LAUNCHER_TARGET_VELOCITY = 750  ; //flyWheel
+    protected double LAUNCHER_MIN_VELOCITY = 500; //starts feeder
 
     ElapsedTime feederTimer = new ElapsedTime();
     ElapsedTime StopTimer = new ElapsedTime();
@@ -162,5 +162,13 @@ public class RobotBase extends DriveBase{
     void decreaseVelocity(){
         LAUNCHER_MIN_VELOCITY -= 20;
         LAUNCHER_TARGET_VELOCITY -= 20;
+    }
+    void increaseVelocityHigh(){
+        LAUNCHER_MIN_VELOCITY += 50;
+        LAUNCHER_TARGET_VELOCITY += 50;
+    }
+    void decreaseVelocityHigh(){
+        LAUNCHER_MIN_VELOCITY -= 50;
+        LAUNCHER_TARGET_VELOCITY -= 50;
     }
 }

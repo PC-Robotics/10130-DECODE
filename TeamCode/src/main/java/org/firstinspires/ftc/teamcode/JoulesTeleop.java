@@ -41,6 +41,12 @@ public class JoulesTeleop extends LinearOpMode {
             if(gamepad1.dpadUpWasPressed()){
                 robot.increaseVelocity();
             }
+            if(gamepad1.dpadLeftWasPressed()){
+                robot.decreaseVelocityHigh();
+            }
+            if(gamepad1.dpadRightWasPressed()){
+                robot.increaseVelocityHigh();
+            }
             telemetry.addData("Right Trigger:: ",gamepad1.right_trigger);
             telemetry.update();
         }
