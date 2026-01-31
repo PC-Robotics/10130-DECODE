@@ -16,8 +16,8 @@ public class NoEncoderDoubleLaunchEdit extends OpMode
 {
 
     final double FEED_TIME = 1.50; //The feeder servos run this long when a shot is requested.
-    double LAUNCHER_TARGET_VELOCITY = 550;
-    double LAUNCHER_MIN_VELOCITY = 425 ;
+    double LAUNCHER_TARGET_VELOCITY = 750;
+    double LAUNCHER_MIN_VELOCITY = 625 ;
     final double TIME_BETWEEN_SHOTS = 2;
     final double DRIVE_SPEED = 0.5;
     final double ROTATE_SPEED = 0.2;
@@ -128,7 +128,7 @@ public class NoEncoderDoubleLaunchEdit extends OpMode
             case MOVE_FORWARD:
                 drive(.5, 0, 0);
                 //1500
-                if (driveTimer.milliseconds() > 1350){
+                if (driveTimer.milliseconds() > 1275){
                     drive(0, 0, 0);
                     flyWheelLeft.setZeroPowerBehavior(BRAKE);
                     flyWheelRight.setZeroPowerBehavior(BRAKE);
@@ -160,8 +160,8 @@ public class NoEncoderDoubleLaunchEdit extends OpMode
                 //
                 //TODO: make sure ts actually freaking functions *shrug*
             case SECOND_LAUNCH:
-                LAUNCHER_TARGET_VELOCITY = 1000;
-                LAUNCHER_MIN_VELOCITY = 800;
+                LAUNCHER_TARGET_VELOCITY = 900;
+                LAUNCHER_MIN_VELOCITY = 700;
                 driveTimer.reset();
                 feeder.setPower(.5);
                 launch(true);
