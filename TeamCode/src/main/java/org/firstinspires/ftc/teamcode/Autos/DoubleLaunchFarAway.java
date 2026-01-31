@@ -201,7 +201,7 @@ public class DoubleLaunchFarAway extends OpMode
             case STRAFE_RIGHT:
                 //maybe mess with ts
                 driveTimer.reset();
-                drive(.5,0,0);
+                drive(-.5,0,0);
                 if (driveTimer.milliseconds() > 750) {
                     drive(0, 0 , 0);
                     autonomousState = AutonomousState.COMPLETE;
