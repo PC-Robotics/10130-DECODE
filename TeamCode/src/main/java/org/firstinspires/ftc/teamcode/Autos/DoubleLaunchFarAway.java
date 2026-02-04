@@ -175,9 +175,6 @@ public class DoubleLaunchFarAway extends OpMode
                 feeder.setPower(.5);
                 launch(true);
                 runIntake(-.5);
-                if(driveTimer.milliseconds() > 750){
-                    runIntake(0);
-                }
                 autonomousState = DoubleLaunchFarAway.AutonomousState.LETS_WAIT_AGAIN;
                 break;
 
